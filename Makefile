@@ -3,6 +3,8 @@ NAME	=	cub3d
 SRCS	=	./srcs/main.c \
 			./srcs/parsing/check_map.c \
 			./srcs/parsing/check_map_utils.c \
+			./srcs/parsing/parse_utils.c \
+			./srcs/parsing/check_data.c \
 			./srcs/error.c \
 			./srcs/parsing/data.c \
 			./srcs/free.c \

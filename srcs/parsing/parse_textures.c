@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 12:45:31 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:31:08 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,10 @@ t_color	*get_rgb_values(char *raw_values)
 {
 	t_color	*colors;
 	char	**values;
-	char	*tmp;
-	int		i;
 
-	values = ft_split(raw_values, ',');
-	i = 0;
-	while (values[i])
-	{
-		tmp = values[i];
-		values[i] = ft_strtrim(values[i], " \t");
-		free(tmp);
-		i++;
-	}
+	values = split_and_trim_raw_values(raw_values);
+	if (!values)
+		return (NULL);
 	colors = malloc(sizeof(t_color));
 	if (!colors)
 		return (NULL);

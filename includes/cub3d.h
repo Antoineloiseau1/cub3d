@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 12:46:39 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:43:10 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ typedef struct s_data
 
 //CHECKS
 void		check_args(int argc, char *argv[]);
-void		check_file_extension(char *file_name);
+int			check_file_extension(char *file_name, char *ext);
 int			check_opening(char *file);
 void		check_map(t_data *data);
 int			check_textures(t_textures *textures);
 int			map_check_start_position(char *map[]);
 int			map_check_char(char *map[]);
 int			check_for_additionnal_content(char *map[]);
+void		check_if_textures_parsed(t_data *data);
+void		check_file(t_data *data);
 
 //DATA
 t_data		*init_data(char *file);
@@ -54,6 +56,7 @@ t_data		*init_data(char *file);
 t_textures	*parse_textures(char *file[]);
 char		*get_texture_path(char *line);
 char		**extract_map(char *file[]);
+char		**split_and_trim_raw_values(char *raw_values);
 
 //UTILS
 int			is_ok_for_map(char c);

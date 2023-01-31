@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:34:31 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 13:00:42 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:09:47 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*search_map(char *line)
 		i++;
 	if (line[i] == '1')
 		return (line);
+	if (line[i] == '0')
+		return (NULL);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:37:38 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 12:39:19 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 14:14:43 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,35 @@
 
 void	check_args(int argc, char *argv[])
 {
+	char	**file;
+	char	*file_name;
+	char	*file_extension;
+
 	if (argc != 2)
-		error(1, "usage: ./cub3d [map].cub");
-	check_file_extension(argv[1]);
+		error(1, "usage: ./cub3d [file].cub");
+	file = ft_split(argv[1], '/');
+	file_name = file[tab_len(file) - 1];
+	file_extension = (ft_strchr(file_name, '.'));
+	if (!file_extension)
+	{
+		free_chartab(file);
+		error(1, "no extension given to file");
+	}
+	if (check_file_extension(file_name, file_extension))
+	{
+		free_chartab(file);
+		error(1, "file must be [file].cub");
+	}
+	free_chartab(file);
 }
 
-void	check_file_extension(char *file_name)
+int	check_file_extension(char *file_name, char *ext)
 {
-	if (!ft_strnstr(file_name + ft_strlen(file_name) - 4, ".cub", 4))
-		error(1, "file extension must be .cub");
+	if (ft_strcmp(ext, ".cub"))
+		return (1);
+	if (!ft_strcmp(file_name, ".cub"))
+		return (1);
+	return (0);
 }
 
 int	check_opening(char *file)

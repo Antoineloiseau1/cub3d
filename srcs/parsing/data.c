@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:55:30 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 13:00:05 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:42:16 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,9 @@ t_data	*init_data(char *file)
 	if (!data)
 		error(-1, "failed to allocate data");
 	data->file = extract_file_content(fd);
-	if (data->file == NULL)
-	{
-		free(data);
-		error(-1, "file is empty");
-	}
+	check_file(data);
 	data->textures = parse_textures(data->file);
-	if (check_textures(data->textures))
-	{
-		data->map = NULL;
-		free_data(data);
-		error(1, "textures undifined");
-	}
+	check_if_textures_parsed(data);
 	data->map = extract_map(data->file);
 	close(fd);
 	if (!data->map)

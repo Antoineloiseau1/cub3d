@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:41:09 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 13:05:54 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:23:39 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	map_check_char(char *map[])
 	return (0);
 }
 
-#include <stdio.h>
-
 int	check_for_additionnal_content(char *map[])
 {
 	int	i;
@@ -60,7 +58,7 @@ int	check_for_additionnal_content(char *map[])
 	i = 0;
 	while (map[i])
 	{
-		if(!map[i][0])
+		if (!map[i][0])
 			break ;
 		i++;
 	}

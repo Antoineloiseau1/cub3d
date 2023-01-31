@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:57:19 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 12:42:01 by antoine          ###   ########.fr       */
+/*   Updated: 2023/01/31 15:05:19 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ int	map_check_zeros_in_line(char *map[], int line)
 	{
 		if (map[line][i] == '0')
 		{
+			if (ft_strlen(map[line - 1]) < ft_strlen(map[line]))
+				return (1);
+			if (ft_strlen(map[line + 1]) < ft_strlen(map[line]))
+				return (1);
 			if (ft_isspace(map[line][i - 1]) || !map[line][i - 1])
 				return (1);
 			if (ft_isspace(map[line][i + 1]) || !map[line][i + 1])
