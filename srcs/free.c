@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:56:58 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/30 12:21:09 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:32:34 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	free_chartab(char *tab[])
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -23,11 +23,33 @@ void	free_chartab(char *tab[])
 		free(tab[i]);
 		i++;
 	}
+	free(tab);
+}
+
+void	free_textures(t_textures *textures)
+{
+	if (textures->north)
+		free(textures->north);
+	if (textures->south)
+		free(textures->south);
+	if (textures->east)
+		free(textures->east);
+	if (textures->west)
+		free(textures->west);
+	if (textures->ceil)
+		free(textures->ceil);
+	if (textures->floor)
+		free(textures->floor);
+	free(textures);
 }
 
 void	free_data(t_data *data)
 {
-	free_chartab(data->file);
-	free_chartab(data->map);
+	if (data->file)
+		free_chartab(data->file);
+	if (data->map)
+		free_chartab(data->map);
+	if (data->textures)
+		free_textures(data->textures);
 	free(data);
 }

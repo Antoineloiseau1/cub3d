@@ -1,12 +1,15 @@
 NAME	=	cub3d
 
 SRCS	=	./srcs/main.c \
-			./srcs/checkers.c \
+			./srcs/parsing/check_map.c \
+			./srcs/parsing/check_map_utils.c \
 			./srcs/error.c \
-			./srcs/data.c \
+			./srcs/parsing/data.c \
 			./srcs/free.c \
 			./srcs/utils.c \
-			./srcs/parser.c
+			./srcs/parsing/parse_textures.c \
+			./srcs/parsing/check_file.c \
+			./srcs/parsing/parse_map.c
 
 OBJS	= 	${SRCS:.c=.o}
 
@@ -14,9 +17,9 @@ LIB		=	libft/libft.a
 
 LFT		= 	-L./libft -lft
 
-MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
+#MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
 
-CC		=	gcc
+CC		=	gcc -g
 
 CFLAGS	=	-Wall -Werror -Wextra
 

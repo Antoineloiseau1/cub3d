@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 10:18:33 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/30 12:29:07 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/01/31 12:30:56 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_tab(char *tab[])
 	while (tab[i])
 	{
 		write(1, tab[i], ft_strlen(tab[i]));
+		write(1, "\n", 1);
 		i++;
 	}
-	write(1, "\n", 1);
 }
