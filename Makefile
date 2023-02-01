@@ -23,7 +23,7 @@ LFT		= 	-L./libft -lft
 
 CC		=	gcc -g
 
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
 
 RM		= 	rm -rf
 
