@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 15:43:10 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/01 09:17:08 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,20 @@ typedef struct s_textures
 	t_color	*ceil;
 }t_textures;
 
+typedef struct s_mlx
+{
+	void		*img;
+	void		*addr;
+	void		*mlx;
+	void		*win;
+}				t_mlx;
+
 typedef struct s_data
 {
 	char		**file;
 	char		**map;
 	t_textures	*textures;
+	t_mlx		mlx;
 }t_data;
 
 //CHECKS
