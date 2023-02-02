@@ -6,7 +6,7 @@
 /*   By: mmidon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/02 08:10:25 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/02 10:47:20 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,44 @@ void	ft_init_data(t_data *data, int i)
 
 }
 
+void	ft_set_step(t_data data)
+{
+	if (data->map.rayDir.x < 0)
+	{
+		data->map.step_x = -1;
+		data->map.sideDist = (data->map.pos.x - data->map.tile_x) * data->map.deltaDist.x;
+	}
+	else
+	{
+		data->map.step_x = 1;
+		data->map.sideDist = (data->map.pos.x + 1.0 - data->map.tile_x) * data->map.deltaDist.x;
+	}
+	if (data->map.rayDir.y < 0)
+	{
+		data->map.step_y = -1;
+		data->map.sideDist = (data->map.pos.y - data->map.tile_y) * data->map.deltaDist.y;
+	}
+	else
+	{
+		data->map.step_y = 1;
+		data->map.sideDist = (data->map.pos.y + 1.0 - data->map.tile_y) * data->map.deltaDist.y;
+	}
+
+}
+
 int	ft_raycasting(t_data *data)
 {
 	int	i;
+	int	side;
+	int	hit;
 
-	data->map.w = 66; ////////debug
+	data->map.w = 0.66; ////////
 	i = -1;
 	while (++i < data->map.w)
 	{
 		ft_init_data(data, i);
+		hit = 0;
+		ft_set_step(data);
 	}
 
 
