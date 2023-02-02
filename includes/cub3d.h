@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/02 08:11:41 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/02 13:07:34 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_map
 	t_coord	rayDir;
 	t_coord	sideDist;
 	t_coord	deltaDist;
+	t_coord	ray_pos;
 	double	perpWallDist;
 	int	step_x;
 	int	step_y;
