@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:55:30 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 15:42:16 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/01 12:07:58 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ t_data	*init_data(char *file)
 	check_file(data);
 	data->textures = parse_textures(data->file);
 	check_if_textures_parsed(data);
-	data->map = extract_map(data->file);
+	data->map.map = extract_map(data->file);
 	close(fd);
-	if (!data->map)
+	if (!data->map.map)
 	{
 		free_data(data);
 		error(2, "map not found in file");

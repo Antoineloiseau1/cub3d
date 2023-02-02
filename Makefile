@@ -12,7 +12,8 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/parse_textures.c \
 			./srcs/parsing/check_file.c \
 			./srcs/parsing/parse_map.c \
-			./srcs/hook.c
+			./srcs/hook.c \
+			./srcs/raycasting.c
 
 OBJS	= 	${SRCS:.c=.o}
 

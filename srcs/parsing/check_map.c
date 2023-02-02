@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:57:19 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/01 08:53:18 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/01 12:06:57 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,27 +117,27 @@ int	map_check_intermediate_lines(char *map[])
 
 void	check_map(t_data *data)
 {
-	if (check_for_additionnal_content(data->map))
+	if (check_for_additionnal_content(data->map.map))
 	{
 		free_data(data);
 		error(2, "unexpected line(s) after map");
 	}
-	if (map_check_char(data->map))
+	if (map_check_char(data->map.map))
 	{
 		free_data(data);
 		error(2, "unexpected char in map");
 	}
-	if (map_check_start_position(data->map))
+	if (map_check_start_position(data->map.map))
 	{
 		free_data(data);
 		error(2, "there must be one and only position in map");
 	}
-	if (map_check_first_and_last_line(data->map))
+	if (map_check_first_and_last_line(data->map.map))
 	{
 		free_data(data);
 		error(2, "map is not closed [1]");
 	}
-	if (map_check_intermediate_lines(data->map))
+	if (map_check_intermediate_lines(data->map.map))
 	{
 		free_data(data);
 		error(2, "map is not closed [2]");

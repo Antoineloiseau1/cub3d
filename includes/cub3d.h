@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/01 09:17:08 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/02 08:11:41 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,39 @@ typedef struct s_mlx
 	void		*addr;
 	void		*mlx;
 	void		*win;
+	int			win_witdh;
+	int			win_height;
 }				t_mlx;
+
+typedef	struct	s_coord
+{
+	double	x;
+	double	y;
+}				t_coord;
+
+typedef struct s_map
+{
+	char	**map;
+	t_coord	pos;
+	t_coord	dir;
+	t_coord	plane;
+	t_coord	camera;
+	t_coord	rayDir;
+	t_coord	sideDist;
+	t_coord	deltaDist;
+	double	perpWallDist;
+	int	step_x;
+	int	step_y;
+	int	tile_x;
+	int	tile_y;
+	double	w;
+}			t_map;
 
 typedef struct s_data
 {
 	char		**file;
-	char		**map;
 	t_textures	*textures;
+	t_map		map;
 	t_mlx		mlx;
 }t_data;
 

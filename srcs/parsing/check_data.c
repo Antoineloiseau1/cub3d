@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:38:03 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 15:42:31 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/01 12:07:21 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	check_if_textures_parsed(t_data *data)
 {
 	if (check_textures(data->textures))
 	{
-		data->map = NULL;
+		data->map.map = NULL;
 		free_data(data);
 		error(1, "textures undefined");
 	}

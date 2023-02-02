@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:56:58 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 12:32:34 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/01 12:08:26 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	free_data(t_data *data)
 {
 	if (data->file)
 		free_chartab(data->file);
-	if (data->map)
-		free_chartab(data->map);
+	if (data->map.map)
+		free_chartab(data->map.map);
 	if (data->textures)
 		free_textures(data->textures);
 	free(data);
