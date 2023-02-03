@@ -6,7 +6,7 @@
 /*   By: mmidon <mmidon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/03 09:55:38 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/03 12:53:20 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_init_data(t_data *data, int i)
 	data->map.plane.y = 0.66; ///fov correct
 
 	data->map.camera.x = (2 * i) / (data->mlx.win_width - 1);
-	data->map.rayDir.x = data->map.dir.x + data->map.plane.x * data->map.camera.x;
-	data->map.rayDir.y = data->map.dir.y + data->map.plane.y * data->map.camera.x;
+	data->map.rayDir.x = data->map.dir.x + (data->map.plane.x * data->map.camera.x);
+	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * data->map.camera.x);
 	data->map.tile_x = (int)data->map.pos.x;
 	data->map.tile_y = (int)data->map.pos.y;
 	if (data->map.rayDir.x == 0)
@@ -55,7 +55,7 @@ void	ft_set_step(t_data *data)
 	else
 	{
 		data->map.step_x = 1;
-		data->map.sideDist.x = (data->map.pos.x + 1.0 - data->map.tile_x) * data->map.deltaDist.x;
+		data->map.sideDist.x = (data->map.tile_x + 1.0 - data->map.pos.x) * data->map.deltaDist.x;
 	}
 	if (data->map.rayDir.y < 0)
 	{
@@ -65,14 +65,13 @@ void	ft_set_step(t_data *data)
 	else
 	{
 		data->map.step_y = 1;
-		data->map.sideDist.y = (data->map.pos.y + 1.0 - data->map.tile_y) * data->map.deltaDist.y;
+		data->map.sideDist.y = (data->map.tile_y + 1.0 - data->map.pos.y) * data->map.deltaDist.y;
 	}
 
 }
 
 void	line_pixel_put(t_data *data, int line_to_draw, int start, int end, int color)
 {
-	printf("start %d end %d\n", start, end);
 	(void)color;
 	while (start != end)
 	{
@@ -95,7 +94,7 @@ void	ft_find_wall_height(t_data *data, int side)
 	data->map.draw_start = -lineheight / 2 + data->mlx.win_height / 2;
 	if (data->map.draw_start < 0)
 		data->map.draw_start = 0;
-	data->map.draw_end = lineheight / 2 + data->mlx.win_height / 2;
+	data->map.draw_end = (lineheight / 2) + (data->mlx.win_height / 2);
 	if (data->map.draw_end >= data->mlx.win_height)
 		data->map.draw_end = data->mlx.win_height - 1;
 
@@ -110,25 +109,26 @@ int	ft_find_wall(t_data *data)
 	hit = 0;
 	while (hit == 0)
 	{
-		printf("%f	%f", data->map.pos.x ,data->map.pos.y);
+		printf("%c\n",data->map.map[data->map.tile_y][(int)data->map.tile_x]);
 		if (data->map.sideDist.x < data->map.sideDist.y)
 		{
 			data->map.sideDist.x += data->map.deltaDist.x;
-			data->map.pos.x += data->map.step_x;
+			data->map.tile_x += data->map.step_x;
 			side = 0;
 		}
 		else
 		{
 			data->map.sideDist.y += data->map.deltaDist.y;
-			data->map.pos.y += data->map.step_y;
+			data->map.tile_y += data->map.step_y;
 			side = 1;
 		}
-		if (data->map.map[(int)data->map.pos.y][(int)data->map.pos.x] == '1')
+		printf("%c\n",data->map.map[data->map.tile_y][(int)data->map.tile_x]);
+		if (data->map.map[data->map.tile_y][(int)data->map.tile_x] == '1')
 			hit = 1;
 	}
 	ft_find_wall_height(data, side);
-	data->map.pos.x = 2; /////debug
-	data->map.pos.y = 1;
+	data->map.tile_x = (int)data->map.pos.x; /////debug
+	data->map.tile_y = (int)data->map.pos.y;
 	return (side);
 }
 
@@ -136,8 +136,6 @@ int	ft_raycasting(t_data *data)
 {
 	int	i;
 
-	data->mlx.win_width = 400; //////// random value, win width;
-	data->mlx.win_height = 400;
 	i = -1;
 	while (++i < data->mlx.win_width)
 	{
@@ -156,7 +154,7 @@ int	ft_raycasting(t_data *data)
 
 
 //player position on the map;
-void	ft_get_player(char **map, t_data *data)
+void	get_player_position(char **map, t_data *data)
 {
 	int	i;
 	int	j;
@@ -172,6 +170,8 @@ void	ft_get_player(char **map, t_data *data)
 			{
 				data->map.pos.y = i;
 				data->map.pos.x = j;
+				data->map.tile_y = (int) data->map.pos.y;
+				data->map.tile_y = (int) data->map.pos.x;
 				return ;
 			}
 		}
@@ -198,7 +198,7 @@ void	ft_get_dir(t_data *data)
 
 int	ft_init_raycasting(char **map, t_data *data)
 {
-	ft_get_player(map, data);
+	get_player_position(map, data);
 	ft_get_dir(data);
 	ft_raycasting(data);
 	return (0);
