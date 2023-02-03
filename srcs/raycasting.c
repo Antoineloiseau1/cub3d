@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmidon <mmidon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/02 15:57:57 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/03 09:55:38 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> 
 #include <math.h>
+#include <mlx.h> 
 
 #include "../includes/cub3d.h"
 
@@ -22,100 +23,131 @@ double	ft_abs(double nbr)
 	return (nbr);
 }
 
-
-void	ft_init_data(t_data *data, int win_strip)
+//calculs de base, pythagore et tout
+void	ft_init_data(t_data *data, int i)
 {
-	data->map.camera.x = 2 * win_strip / data->map.w - 1; //plan camera = (len(dir) / len(plane)
-	data->map.rayDir.x = data->map.dir.x + data->map.plane.x * data->map.camera.x; //calcul du rayon (somme de dir et plane)
-	data->map.rayDir.y = data->map.dir.y + data->map.plane.y * data->map.camera.y; // ||	|| 	||		||			||
+	data->map.plane.x = 0; 
+	data->map.plane.y = 0.66; ///fov correct
+
+	data->map.camera.x = (2 * i) / (data->mlx.win_width - 1);
+	data->map.rayDir.x = data->map.dir.x + data->map.plane.x * data->map.camera.x;
+	data->map.rayDir.y = data->map.dir.y + data->map.plane.y * data->map.camera.x;
 	data->map.tile_x = (int)data->map.pos.x;
 	data->map.tile_y = (int)data->map.pos.y;
 	if (data->map.rayDir.x == 0)
-		data->map.deltaDist.x =  1 / 1e30;
+		data->map.deltaDist.x =  1e30;
 	else
 		data->map.deltaDist.x =  1 / ft_abs(1 / data->map.rayDir.x);
 	if (data->map.rayDir.y == 0)
-		data->map.deltaDist.y =  1 / 1e30;
+		data->map.deltaDist.y =  1e30;
 	else
 		data->map.deltaDist.y =  1 / ft_abs(1 / data->map.rayDir.y);
 
 }
-
-void	ft_set_step(t_data data)
+//dans quel sens on avance/regarde
+void	ft_set_step(t_data *data)
 {
 	if (data->map.rayDir.x < 0)
 	{
 		data->map.step_x = -1;
-		data->map.sideDist = (data->map.pos.x - data->map.tile_x) * data->map.deltaDist.x;
+		data->map.sideDist.x = (data->map.pos.x - data->map.tile_x) * data->map.deltaDist.x;
 	}
 	else
 	{
 		data->map.step_x = 1;
-		data->map.sideDist = (data->map.pos.x + 1.0 - data->map.tile_x) * data->map.deltaDist.x;
+		data->map.sideDist.x = (data->map.pos.x + 1.0 - data->map.tile_x) * data->map.deltaDist.x;
 	}
 	if (data->map.rayDir.y < 0)
 	{
 		data->map.step_y = -1;
-		data->map.sideDist = (data->map.pos.y - data->map.tile_y) * data->map.deltaDist.y;
+		data->map.sideDist.y = (data->map.pos.y - data->map.tile_y) * data->map.deltaDist.y;
 	}
 	else
 	{
 		data->map.step_y = 1;
-		data->map.sideDist = (data->map.pos.y + 1.0 - data->map.tile_y) * data->map.deltaDist.y;
+		data->map.sideDist.y = (data->map.pos.y + 1.0 - data->map.tile_y) * data->map.deltaDist.y;
 	}
 
 }
 
-void	set_wall_distance(t_data *data)
+void	line_pixel_put(t_data *data, int line_to_draw, int start, int end, int color)
+{
+	printf("start %d end %d\n", start, end);
+	(void)color;
+	while (start != end)
+	{
+		
+		mlx_pixel_put(data->mlx.mlx, data->mlx.win, line_to_draw, start, color);
+		start++;
+	}
+}
+
+//selon la distance mur-joueur et s'il est de face ou de profil, taille du mur
+void	ft_find_wall_height(t_data *data, int side)
+{
+	int	lineheight;
+
+	if (side == 0)
+		data->map.perpWallDist = data->map.sideDist.x - data->map.deltaDist.x;
+	else
+		data->map.perpWallDist = data->map.sideDist.y - data->map.deltaDist.y;
+	lineheight = (int)(data->mlx.win_height / data->map.perpWallDist);
+	data->map.draw_start = -lineheight / 2 + data->mlx.win_height / 2;
+	if (data->map.draw_start < 0)
+		data->map.draw_start = 0;
+	data->map.draw_end = lineheight / 2 + data->mlx.win_height / 2;
+	if (data->map.draw_end >= data->mlx.win_height)
+		data->map.draw_end = data->mlx.win_height - 1;
+
+
+}
+//a combien de '"cases"' est le mur
+int	ft_find_wall(t_data *data)
 {
 	int	hit;
-	int side;
-	int	perp_wall_distance;
-	int	height;
+	int	side;
 
 	hit = 0;
-	while (!hit)
+	while (hit == 0)
 	{
-		if (data->map.deltaDist.x < data->map.deltaDist.y)
+		printf("%f	%f", data->map.pos.x ,data->map.pos.y);
+		if (data->map.sideDist.x < data->map.sideDist.y)
 		{
-			data->map.ray_pos.x += data->map.deltaDist.x;
-			data->map.pos.x += data->map.step_x; 
+			data->map.sideDist.x += data->map.deltaDist.x;
+			data->map.pos.x += data->map.step_x;
 			side = 0;
 		}
 		else
 		{
-			data->map.ray_pos.y += data->map.deltaDist.y;
-			data->map.pos.y += data->map.step_y;			
+			data->map.sideDist.y += data->map.deltaDist.y;
+			data->map.pos.y += data->map.step_y;
 			side = 1;
 		}
-		if (data->map[data->map.pos.x][data->map.pos.y] > 0)
+		if (data->map.map[(int)data->map.pos.y][(int)data->map.pos.x] == '1')
 			hit = 1;
 	}
-	if (side == 0)
-	{
-		perp_wall_distance = data->map.sideDist.x - data->map.deltaDist.x;
-		wall_height = h / (data->map.ray_pos.x * perp_wall_distance);
-	}
-	else
-	{
-		perp_wall_distance = data->map.sideDist.y - data->map.deltaDist.y;
-	
+	ft_find_wall_height(data, side);
+	data->map.pos.x = 2; /////debug
+	data->map.pos.y = 1;
+	return (side);
 }
 
 int	ft_raycasting(t_data *data)
 {
-	int	win_strip;
-	int	side;
-	int	hit;
+	int	i;
 
-	data->map.w = 0.66; // valeur random qui definit le plan (?!) rapport au au FOV et tout ca
-	win_strip = -1;
-	while (++win_strip < data->map.w)
+	data->mlx.win_width = 400; //////// random value, win width;
+	data->mlx.win_height = 400;
+	i = -1;
+	while (++i < data->mlx.win_width)
 	{
-		ft_init_data(data, win_strip);
-		hit = 0;
+		ft_init_data(data, i);
 		ft_set_step(data);
-		set_wall_distance(data)''
+		int side = ft_find_wall(data);
+		if (side)
+			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
+		else
+			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 123456664);
 	}
 
 
@@ -123,8 +155,8 @@ int	ft_raycasting(t_data *data)
 }
 
 
-//Raycasting starts at player position
-void	get_player_position(char **map, t_data *data)
+//player position on the map;
+void	ft_get_player(char **map, t_data *data)
 {
 	int	i;
 	int	j;
@@ -146,8 +178,8 @@ void	get_player_position(char **map, t_data *data)
 	}
 }
 
-//the direction the player is going given the actual position
-void	get_direction_vector(t_data *data)
+//player initial dir
+void	ft_get_dir(t_data *data)
 {
 	char	c;
 
@@ -166,8 +198,8 @@ void	get_direction_vector(t_data *data)
 
 int	ft_init_raycasting(char **map, t_data *data)
 {
-	get_player_position(map, data);
-	get_direction_vector(data);
+	ft_get_player(map, data);
+	ft_get_dir(data);
 	ft_raycasting(data);
 	return (0);
 }

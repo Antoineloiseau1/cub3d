@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/02 13:07:34 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/03 08:57:29 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_mlx
 	void		*addr;
 	void		*mlx;
 	void		*win;
-	int			win_witdh;
+	int			win_width;
 	int			win_height;
 }				t_mlx;
 
@@ -56,13 +56,13 @@ typedef struct s_map
 	t_coord	rayDir;
 	t_coord	sideDist;
 	t_coord	deltaDist;
-	t_coord	ray_pos;
 	double	perpWallDist;
 	int	step_x;
 	int	step_y;
 	int	tile_x;
 	int	tile_y;
-	double	w;
+	int	draw_start;
+	int	draw_end;
 }			t_map;
 
 typedef struct s_data
