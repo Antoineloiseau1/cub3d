@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmidon <mmidon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/03 12:53:20 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/05 10:31:53 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h> 
 #include <math.h>
 #include <mlx.h> 
+#include <unistd.h>
 
 #include "../includes/cub3d.h"
 
@@ -25,11 +26,8 @@ double	ft_abs(double nbr)
 
 //calculs de base, pythagore et tout
 void	ft_init_data(t_data *data, int i)
-{
-	data->map.plane.x = 0; 
-	data->map.plane.y = 0.66; ///fov correct
-
-	data->map.camera.x = (2 * i) / (data->mlx.win_width - 1);
+{	
+	data->map.camera.x = (2 * i) / ((double)data->mlx.win_width - 1);
 	data->map.rayDir.x = data->map.dir.x + (data->map.plane.x * data->map.camera.x);
 	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * data->map.camera.x);
 	data->map.tile_x = (int)data->map.pos.x;
@@ -145,7 +143,7 @@ int	ft_raycasting(t_data *data)
 		if (side)
 			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
 		else
-			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 123456664);
+			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
 	}
 
 
@@ -171,7 +169,7 @@ void	get_player_position(char **map, t_data *data)
 				data->map.pos.y = i;
 				data->map.pos.x = j;
 				data->map.tile_y = (int) data->map.pos.y;
-				data->map.tile_y = (int) data->map.pos.x;
+				data->map.tile_x = (int) data->map.pos.x;
 				return ;
 			}
 		}
@@ -179,27 +177,43 @@ void	get_player_position(char **map, t_data *data)
 }
 
 //player initial dir
-void	ft_get_dir(t_data *data)
+void	get_initial_dir(t_data *data)
 {
 	char	c;
 
-	c = data->map.map[(int)data->map.pos.y][(int)data->map.pos.x];
+	c = data->map.map[data->map.tile_y][data->map.tile_x];
 	data->map.dir.y = 0;
 	data->map.dir.x = 0;
 	if (c == 'N')
-		data->map.dir.y = 1;
-	if (c == 'S')
+	{
+		data->map.plane.x = 1;
+		data->map.plane.y = -0.66;
 		data->map.dir.y = -1;
+	}
+	if (c == 'S')
+	{
+		data->map.plane.x = 1;
+		data->map.plane.y = 0.66;
+		data->map.dir.y = 1;
+	}
 	if (c == 'E')
+	{
+		data->map.plane.x = 0.66;
+		data->map.plane.y = 1;
 		data->map.dir.x = 1;
+	}
 	if (c == 'W')
+	{
+		data->map.plane.x = -0.66;
+		data->map.plane.x = 1;
 		data->map.dir.x = -1;
+	}
 }
 
 int	ft_init_raycasting(char **map, t_data *data)
 {
 	get_player_position(map, data);
-	ft_get_dir(data);
+	get_initial_dir(data);
 	ft_raycasting(data);
 	return (0);
 }
