@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/05 13:53:50 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/05 14:03:01 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ int	ft_raycasting(t_data *data)
 			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
 		else
 			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
+		line_pixel_put(data, pixel, 0, data->map.draw_start, 789687465);
+		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 12345645);
 		pixel++;
 	}
 
