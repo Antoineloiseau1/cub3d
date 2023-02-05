@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/05 12:19:21 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/05 13:53:50 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,27 @@ double	ft_abs(double nbr)
 }
 
 //calculs de base, pythagore et tout
-void	ft_init_data(t_data *data, int i)
+void	ft_init_data(t_data *data, int pixel)
 {	
-	data->map.camera.x = (2 * i) / ((double)data->mlx.win_width - 1);
-	data->map.rayDir.x = data->map.dir.x + (data->map.plane.x * data->map.camera.x);
-	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * data->map.camera.x);
+	double ratio;
+
+	ratio = (pixel - ((double)data->mlx.win_width / 2)) / ((double)data->mlx.win_width / 2);
+	data->map.rayDir.x = data->map.dir.x + (data->map.plane.x * ratio);
+	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * ratio);
 	data->map.tile_x = (int)data->map.pos.x;
 	data->map.tile_y = (int)data->map.pos.y;
-	if (data->map.rayDir.x == 0)
-		data->map.deltaDist.x =  1e30;
-	else
-		data->map.deltaDist.x =  1 / ft_abs(1 / data->map.rayDir.x);
-	if (data->map.rayDir.y == 0)
-		data->map.deltaDist.y =  1e30;
-	else
-		data->map.deltaDist.y =  1 / ft_abs(1 / data->map.rayDir.y);
+	data->map.deltaDist.x = sqrt(1 + ((data->map.rayDir.y * data->map.rayDir.y) / (data->map.rayDir.x * data->map.rayDir.x)));
+	data->map.deltaDist.y = sqrt(1 + ((data->map.rayDir.x * data->map.rayDir.x) / (data->map.rayDir.y * data->map.rayDir.y)));
+	// data->map.deltaDist.x = ft_abs(1 / data->map.rayDir.x);
+	// data->map.deltaDist.y = ft_abs(1 / data->map.rayDir.y);
+	// if (data->map.rayDir.x == 0)
+	// 	data->map.deltaDist.x =  1e30;
+	// else
+	// 	data->map.deltaDist.x =  1 / ft_abs(1 / data->map.rayDir.x);
+	// if (data->map.rayDir.y == 0)
+	// 	data->map.deltaDist.y =  1e30;
+	// else
+	// 	data->map.deltaDist.y =  1 / ft_abs(1 / data->map.rayDir.y);
 
 }
 //dans quel sens on avance/regarde
@@ -88,8 +94,8 @@ void	ft_find_wall_height(t_data *data, int side)
 		data->map.perpWallDist = data->map.sideDist.x - data->map.deltaDist.x;
 	else
 		data->map.perpWallDist = data->map.sideDist.y - data->map.deltaDist.y;
-	lineheight = (int)(data->mlx.win_height / data->map.perpWallDist);
-	data->map.draw_start = -lineheight / 2 + data->mlx.win_height / 2;
+	lineheight = (int)((double)(data->mlx.win_height / data->map.perpWallDist));
+	data->map.draw_start = (-lineheight / 2) + (data->mlx.win_height / 2);
 	if (data->map.draw_start < 0)
 		data->map.draw_start = 0;
 	data->map.draw_end = (lineheight / 2) + (data->mlx.win_height / 2);
@@ -119,7 +125,7 @@ int	ft_find_wall(t_data *data)
 			data->map.tile_y += data->map.step_y;
 			side = 1;
 		}
-		if (data->map.map[data->map.tile_y][(int)data->map.tile_x] == '1')
+		if (data->map.map[data->map.tile_y][data->map.tile_x] == '1')
 			hit = 1;
 	}
 	ft_find_wall_height(data, side);
@@ -130,19 +136,19 @@ int	ft_find_wall(t_data *data)
 
 int	ft_raycasting(t_data *data)
 {
-	int	i;
+	int	pixel;
 
-	i = 0;
-	while (i < data->mlx.win_width)
+	pixel = 0;
+	while (pixel < data->mlx.win_width)
 	{
-		ft_init_data(data, i);
+		ft_init_data(data, pixel);
 		ft_set_step(data);
 		int side = ft_find_wall(data);
 		if (side)
-			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
+			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
 		else
-			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
-		i++;
+			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
+		pixel++;
 	}
 
 
@@ -167,8 +173,8 @@ void	get_player_position(char **map, t_data *data)
 			{
 				data->map.pos.y = i;
 				data->map.pos.x = j;
-				data->map.tile_y = (int) data->map.pos.y;
-				data->map.tile_x = (int) data->map.pos.x;
+				data->map.tile_y = floor(data->map.pos.y);
+				data->map.tile_x = floor(data->map.pos.x);
 				return ;
 			}
 		}
@@ -198,13 +204,13 @@ void	get_initial_dir(t_data *data)
 	if (c == 'E')
 	{
 		data->map.plane.x = 0;
-		data->map.plane.y = -0.66;
+		data->map.plane.y = 0.66;
 		data->map.dir.x = 1;
 	}
 	if (c == 'W')
 	{
 		data->map.plane.x = 0;
-		data->map.plane.y = 0.66;
+		data->map.plane.y = -0.66;
 		data->map.dir.x = -1;
 	}
 }
