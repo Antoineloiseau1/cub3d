@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/05 10:31:53 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/05 12:19:21 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	ft_find_wall(t_data *data)
 	hit = 0;
 	while (hit == 0)
 	{
-		printf("%c\n",data->map.map[data->map.tile_y][(int)data->map.tile_x]);
 		if (data->map.sideDist.x < data->map.sideDist.y)
 		{
 			data->map.sideDist.x += data->map.deltaDist.x;
@@ -120,7 +119,6 @@ int	ft_find_wall(t_data *data)
 			data->map.tile_y += data->map.step_y;
 			side = 1;
 		}
-		printf("%c\n",data->map.map[data->map.tile_y][(int)data->map.tile_x]);
 		if (data->map.map[data->map.tile_y][(int)data->map.tile_x] == '1')
 			hit = 1;
 	}
@@ -134,8 +132,8 @@ int	ft_raycasting(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->mlx.win_width)
+	i = 0;
+	while (i < data->mlx.win_width)
 	{
 		ft_init_data(data, i);
 		ft_set_step(data);
@@ -144,6 +142,7 @@ int	ft_raycasting(t_data *data)
 			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
 		else
 			line_pixel_put(data, i, data->map.draw_start, data->map.draw_end, 100);
+		i++;
 	}
 
 
@@ -186,26 +185,26 @@ void	get_initial_dir(t_data *data)
 	data->map.dir.x = 0;
 	if (c == 'N')
 	{
-		data->map.plane.x = 1;
-		data->map.plane.y = -0.66;
+		data->map.plane.x = 0.66;
+		data->map.plane.y = 0;
 		data->map.dir.y = -1;
 	}
 	if (c == 'S')
 	{
-		data->map.plane.x = 1;
-		data->map.plane.y = 0.66;
+		data->map.plane.x = -0.66;
+		data->map.plane.y = 0;
 		data->map.dir.y = 1;
 	}
 	if (c == 'E')
 	{
-		data->map.plane.x = 0.66;
-		data->map.plane.y = 1;
+		data->map.plane.x = 0;
+		data->map.plane.y = -0.66;
 		data->map.dir.x = 1;
 	}
 	if (c == 'W')
 	{
-		data->map.plane.x = -0.66;
-		data->map.plane.x = 1;
+		data->map.plane.x = 0;
+		data->map.plane.y = 0.66;
 		data->map.dir.x = -1;
 	}
 }
