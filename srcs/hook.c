@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 13:09:56 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:39:10 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,17 @@
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
 
-# define ROTATE_SPEED 0.04
-# define FRONT_SPEED 0.25
-# define BACK_SPEED 0.18
-# define TRANSLATE_SPEED 0.15
+#define ROTATE_SPEED 0.04
+#define FRONT_SPEED 0.25
+#define BACK_SPEED 0.18
+#define TRANSLATE_SPEED 0.15
+#define ESCAPE 53
+#define UP 13
+#define DOWN 1
+#define LEFT 0
+#define RIGHT 2
+#define L_ARROW 123
+#define R_ARROW 124
 
 void	move_forward(t_data *data)
 {
@@ -71,22 +78,37 @@ void	rotate_left(t_data *data)
 	data->map.plane.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.plane.y);
 }
 
-void	ft_movement(int key, t_data *data)
+int	press(int key, t_data *data)
 {
-	if (key == 13)
-		move_forward(data);
-	if (key == 1)
-		move_backward(data);
-	if (key == 0)
-		move_left(data);
-	if (key == 2)
-		move_right(data);
-	if (key == 123)
-		rotate_left(data);
-	if (key == 124)
-		rotate_right(data);
+	if (key == UP)
+		data->mlx.up = true;
+	if (key == DOWN)
+		data->mlx.down = true;
+	if (key == LEFT)
+		data->mlx.left = true;
+	if (key == RIGHT)
+		data->mlx.right = true;
+	printf("%d\n", data->mlx.up);
+	// if (key == L_ARROW)
+	// 	rotate_left(data);
+	// if (key == R_ARROW)
+	// 	rotate_right(data);
+	return (key);
 }
 
+int	unpress(int key, t_data *data)
+{
+	if (key == UP)
+		data->mlx.up = false;
+	if (key == DOWN)
+		data->mlx.down = false;
+	if (key == LEFT)
+		data->mlx.left = false;
+	if (key == RIGHT)
+		data->mlx.right = false;
+	printf("%d\n", data->mlx.up);
+	return (key);
+}
 
 int	ft_close(void)
 {
@@ -95,11 +117,10 @@ int	ft_close(void)
 
 int	key_handler(int key, t_data *data)
 {
-	printf("key %d\n",key); 
-	if (key == 53)
+	if (key == ESCAPE)
 		exit(0);
-	if ((key <= 2 && key >= 0) || key == 13 || key == 123 || key == 124)
-		ft_movement(key, data);
+	if ((key <= RIGHT && key >= LEFT) || key == UP || key == L_ARROW || key == R_ARROW)
+		press(key, data);
 	return (0);
 }
 
@@ -121,11 +142,30 @@ int	mouse_handler(int x, int y, t_data *data)
 	return (x);
 }
 
+int	move(int key, t_data *data)
+{
+	printf("test\n");
+	move_forward(data);
+	if (data->mlx.down)
+	{
+		printf("bool %d\n",data->mlx.down);
+		move_backward(data);
+	}
+	if (data->mlx.left)
+		move_left(data);
+	if (data->mlx.right)
+		move_right(data);
+	return (key);
+}
+
 void	hooking(t_data *data)
 {
-	mlx_hook(data->mlx.win, 2, (1L<<15), key_handler, data);
-	data->mlx.old_x = mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
-	printf("old %d\n",data->mlx.old_x);
+	mlx_hook(data->mlx.win, 2, 0, key_handler, data);
+	if (data->mlx.up)
+		mlx_key_hook(data->mlx.mlx, move, data);
+	mlx_hook(data->mlx.win, 3, 0, unpress, data);
+	mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
 	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
 	mlx_loop_hook(data->mlx.mlx, ft_raycasting, data);
+	
 }

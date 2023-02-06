@@ -6,12 +6,14 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/06 12:54:27 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:30:22 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+#include <stdbool.h>
 
 typedef struct s_color
 {
@@ -38,6 +40,10 @@ typedef struct s_mlx
 	int			endian;
 	int			bpp;
 	int			old_x;
+	bool		up;
+	bool		down;
+	bool		left;
+	bool		right;
 	void		*mlx;
 	void		*win;
 	int			win_width;
