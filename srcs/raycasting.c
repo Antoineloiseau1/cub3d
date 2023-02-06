@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 09:29:38 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:15:38 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ void	ft_set_step(t_data *data)
 
 void	line_pixel_put(t_data *data, int line_to_draw, int start, int end, int color)
 {
-	while (++start != end)
+	char *mem_pix;
+	
+	while (start != end)
 	{
-		mlx_pixel_put(data->mlx.mlx, data->mlx.win, line_to_draw, start, color);
+		mem_pix = data->mlx.addr + (start * data->mlx.line_l + line_to_draw * (data->mlx.bpp / 8));
+		*(unsigned int *)mem_pix = color;
+		start++;
 	}
 }
 
@@ -132,18 +136,19 @@ int	ft_raycasting(t_data *data)
 	int	pixel;
 
 	pixel = -1;
+	data->mlx.img = mlx_new_image(data->mlx.mlx, data->mlx.win_width, data->mlx.win_height);
+	data->mlx.addr = mlx_get_data_addr(data->mlx.img, &data->mlx.bpp, &data->mlx.line_l, &data->mlx.endian);
 	while (++pixel < data->mlx.win_width)
 	{
 		ft_init_data(data, pixel);
 		ft_set_step(data);
 		int side = ft_find_wall(data);
-		if (side)
-			line_pixel_put(data, pixel, data->map.draw_start - 1, data->map.draw_end, 100);
-		else
-			line_pixel_put(data, pixel, data->map.draw_start - 1, data->map.draw_end, 150);
-//		line_pixel_put(data, pixel, 0, data->map.draw_start, 789687465);
+		(void)side;
+		
+		line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
 //		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 12345645);
 	}
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 
 
 	return (0);
@@ -211,7 +216,6 @@ void	get_initial_dir(t_data *data)
 
 int	ft_init_raycasting(t_data *data)
 {
-	puts("coucou");
 	ft_raycasting(data);
 	return (0);
 }

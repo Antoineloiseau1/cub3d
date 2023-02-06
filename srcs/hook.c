@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 09:26:54 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:20:48 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 
 void	front_walk(t_data *data)
 {
-	data->map.pos.x += data->map.dir.x * 0.2;
-	data->map.pos.y += data->map.dir.y * 0.2;
-	ft_raycasting(data);
+	data->map.pos.x += data->map.dir.x * 0.07;
+	data->map.pos.y += data->map.dir.y * 0.07;
 }
 
 void	back_walk(t_data *data)
 {
-	data->map.pos.x -= data->map.dir.x * 0.2;
-	data->map.pos.y -= data->map.dir.y * 0.2;
+	data->map.pos.x -= data->map.dir.x * 0.07;
+	data->map.pos.y -= data->map.dir.y * 0.07;
 }
+
 
 void	ft_movement(int key, t_data *data)
 {
@@ -36,6 +36,7 @@ void	ft_movement(int key, t_data *data)
 		front_walk(data);
 	if (key == 1)
 		back_walk(data);
+	ft_raycasting(data);
 }
 
 int	ft_close(void)

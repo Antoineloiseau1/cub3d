@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/03 08:57:29 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/06 10:00:29 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef struct s_mlx
 {
 	void		*img;
 	void		*addr;
+	int			line_l;
+	int			endian;
+	int			bpp;
 	void		*mlx;
 	void		*win;
 	int			win_width;
