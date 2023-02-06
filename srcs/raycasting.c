@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 08:16:29 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/06 09:29:38 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,17 @@ void	ft_init_data(t_data *data, int pixel)
 	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * ratio);
 	data->map.tile_x = (int)data->map.pos.x;
 	data->map.tile_y = (int)data->map.pos.y;
-	if (pixel == 1 || pixel == 1270)
-		printf("x %f y %f\n", data->map.pos.x, data->map.pos.y);
 	data->map.deltaDist.x = sqrt(1 + (pow(data->map.rayDir.y, 2) / pow(data->map.rayDir.x, 2)));
 	data->map.deltaDist.y = sqrt(1 + (pow(data->map.rayDir.x, 2) / pow(data->map.rayDir.y, 2)));
-	/*if (data->map.rayDir.x == 0.0)
-		data->map.deltaDist.x = 1e30;
-	else
-		data->map.deltaDist.x = sqrt(1 + ((data->map.rayDir.y * data->map.rayDir.y) / (data->map.rayDir.x * data->map.rayDir.x)));
-	if (data->map.rayDir.y == 0.0)
-		data->map.deltaDist.y = 1e30;
-	else
-		data->map.deltaDist.y = sqrt(1 + ((data->map.rayDir.x * data->map.rayDir.x) / (data->map.rayDir.y * data->map.rayDir.y)));
-*/}
+	// if (data->map.rayDir.x == 0.0)
+	// 	data->map.deltaDist.x = 1e30;
+	// else
+	// 	data->map.deltaDist.x = sqrt(1 + ((data->map.rayDir.y * data->map.rayDir.y) / (data->map.rayDir.x * data->map.rayDir.x)));
+	// if (data->map.rayDir.y == 0.0)
+	// 	data->map.deltaDist.y = 1e30;
+	// else
+	// 	data->map.deltaDist.y = sqrt(1 + ((data->map.rayDir.x * data->map.rayDir.x) / (data->map.rayDir.y * data->map.rayDir.y)));
+}
 //dans quel sens on avance/regarde
 void	ft_set_step(t_data *data)
 {
@@ -75,10 +73,9 @@ void	ft_set_step(t_data *data)
 
 void	line_pixel_put(t_data *data, int line_to_draw, int start, int end, int color)
 {
-	while (start != end)
+	while (++start != end)
 	{
 		mlx_pixel_put(data->mlx.mlx, data->mlx.win, line_to_draw, start, color);
-		start++;
 	}
 }
 
@@ -134,19 +131,18 @@ int	ft_raycasting(t_data *data)
 {
 	int	pixel;
 
-	pixel = 0;
-	while (pixel < data->mlx.win_width)
+	pixel = -1;
+	while (++pixel < data->mlx.win_width)
 	{
 		ft_init_data(data, pixel);
 		ft_set_step(data);
 		int side = ft_find_wall(data);
 		if (side)
-			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
+			line_pixel_put(data, pixel, data->map.draw_start - 1, data->map.draw_end, 100);
 		else
-			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
+			line_pixel_put(data, pixel, data->map.draw_start - 1, data->map.draw_end, 150);
 //		line_pixel_put(data, pixel, 0, data->map.draw_start, 789687465);
 //		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 12345645);
-		pixel++;
 	}
 
 
@@ -213,9 +209,9 @@ void	get_initial_dir(t_data *data)
 	}
 }
 
-int	ft_init_raycasting(char **map, t_data *data)
+int	ft_init_raycasting(t_data *data)
 {
-	(void)map;
+	puts("coucou");
 	ft_raycasting(data);
 	return (0);
 }

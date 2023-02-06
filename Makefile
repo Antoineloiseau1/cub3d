@@ -1,4 +1,4 @@
-NAME	=	cub3D
+NAME	=	cub3d
 
 SRCS	=	./srcs/main.c \
 			./srcs/parsing/check_map.c \

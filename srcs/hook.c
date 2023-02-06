@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmidon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 08:22:02 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/06 09:26:54 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,23 @@
 
 void	front_walk(t_data *data)
 {
-	data->map.pos.x += data->map.dir.x * 0.5;
-	data->map.pos.y += data->map.dir.y * 0.5;
-//	mlx_clear_window(data->mlx.mlx, data->mlx.win);
+	data->map.pos.x += data->map.dir.x * 0.2;
+	data->map.pos.y += data->map.dir.y * 0.2;
 	ft_raycasting(data);
+}
+
+void	back_walk(t_data *data)
+{
+	data->map.pos.x -= data->map.dir.x * 0.2;
+	data->map.pos.y -= data->map.dir.y * 0.2;
 }
 
 void	ft_movement(int key, t_data *data)
 {
 	if (key == 13)
 		front_walk(data);
+	if (key == 1)
+		back_walk(data);
 }
 
 int	ft_close(void)
