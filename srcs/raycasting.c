@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 10:38:52 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:11:30 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int	ft_find_wall(t_data *data)
 			hit = 1;
 	}
 	ft_find_wall_height(data, side);
-	data->map.tile_x = (int)data->map.pos.x; /////debug
-	data->map.tile_y = (int)data->map.pos.y;
+	//data->map.tile_x = (int)data->map.pos.x; /////debug
+	//data->map.tile_y = (int)data->map.pos.y;
 	return (side);
 }
 
