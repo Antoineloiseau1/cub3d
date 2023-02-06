@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 12:12:49 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:19:16 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,33 @@
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
 
+# define ROTATE_SPEED 0.1
+# define FRONT_SPEED 0.25
+# define BACK_SPEED 0.18
+# define TRANSLATE_SPEED 0.15
+
 void	move_forward(t_data *data)
 {
-	data->map.pos.x += data->map.dir.x * 0.23;
-	data->map.pos.y += data->map.dir.y * 0.23;
+	data->map.pos.x += data->map.dir.x * FRONT_SPEED;
+	data->map.pos.y += data->map.dir.y * FRONT_SPEED;
 }
 
 void	move_backward(t_data *data)
 {
-	data->map.pos.x -= data->map.dir.x * 0.15;
-	data->map.pos.y -= data->map.dir.y * 0.15;
+	data->map.pos.x -= data->map.dir.x * BACK_SPEED;
+	data->map.pos.y -= data->map.dir.y * BACK_SPEED;
 }
 
 void	move_left(t_data *data)
 {
-	data->map.pos.x -= data->map.plane.x * 0.07;
-	data->map.pos.y -= data->map.plane.y * 0.07;
+	data->map.pos.x -= data->map.plane.x * TRANSLATE_SPEED;
+	data->map.pos.y -= data->map.plane.y * TRANSLATE_SPEED;
 }
 
 void	move_right(t_data *data)
 {
-	data->map.pos.x += data->map.plane.x * 0.07;
-	data->map.pos.y += data->map.plane.y * 0.07;
+	data->map.pos.x += data->map.plane.x * TRANSLATE_SPEED;
+	data->map.pos.y += data->map.plane.y * TRANSLATE_SPEED;
 }
 
 void	rotate_right(t_data *data)
@@ -47,11 +52,11 @@ void	rotate_right(t_data *data)
 	double save;
 	
 	save = data->map.dir.x;
-	data->map.dir.x = (cos(0.23) * data->map.dir.x - sin(0.23) * data->map.dir.y);
-	data->map.dir.y = (sin(0.23) * save + cos(0.23) * data->map.dir.y);
+	data->map.dir.x = (cos(ROTATE_SPEED) * data->map.dir.x - sin(ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.y = (sin(ROTATE_SPEED) * save + cos(ROTATE_SPEED) * data->map.dir.y);
 	save = data->map.plane.x;
-	data->map.plane.x = (cos(0.23) * data->map.plane.x - sin(0.23) * data->map.plane.y);
-	data->map.plane.y = (sin(0.23) * save + cos(0.23) * data->map.plane.y);
+	data->map.plane.x = (cos(ROTATE_SPEED) * data->map.plane.x - sin(ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.y = (sin(ROTATE_SPEED) * save + cos(ROTATE_SPEED) * data->map.plane.y);
 }
 
 void	rotate_left(t_data *data)
@@ -59,11 +64,11 @@ void	rotate_left(t_data *data)
 	double save;
 	
 	save = data->map.dir.x;
-	data->map.dir.x = (cos(-0.23) * data->map.dir.x - sin(-0.23) * data->map.dir.y);
-	data->map.dir.y = (sin(-0.23) * save + cos(-0.23) * data->map.dir.y);
+	data->map.dir.x = (cos(-ROTATE_SPEED) * data->map.dir.x - sin(-ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.dir.y);
 	save = data->map.plane.x;
-	data->map.plane.x = (cos(-0.23) * data->map.plane.x - sin(-0.23) * data->map.plane.y);
-	data->map.plane.y = (sin(-0.23) * save + cos(-0.23) * data->map.plane.y);
+	data->map.plane.x = (cos(-ROTATE_SPEED) * data->map.plane.x - sin(-ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.plane.y);
 }
 
 void	ft_movement(int key, t_data *data)
