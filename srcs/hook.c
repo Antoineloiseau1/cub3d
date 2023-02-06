@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 12:19:16 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:09:56 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
 
-# define ROTATE_SPEED 0.1
+# define ROTATE_SPEED 0.04
 # define FRONT_SPEED 0.25
 # define BACK_SPEED 0.18
 # define TRANSLATE_SPEED 0.15
@@ -85,16 +85,6 @@ void	ft_movement(int key, t_data *data)
 		rotate_left(data);
 	if (key == 124)
 		rotate_right(data);
-	printf("------------\n");
-	printf("pos.x = %f\n", data->map.pos.x);
-	printf("pos.y = %f\n", data->map.pos.y);
-	printf("------------\n");
-	printf("dir.x = %f\n", data->map.dir.x);
-	printf("dir.y = %f\n", data->map.dir.y);
-	printf("------------\n");
-	printf("plane.x = %f\n", data->map.plane.x);
-	printf("plane.y = %f\n", data->map.plane.y);
-	printf("------------\n");
 }
 
 
@@ -113,9 +103,29 @@ int	key_handler(int key, t_data *data)
 	return (0);
 }
 
+int	mouse_handler(int x, int y, t_data *data)
+{
+	(void)y;
+	if (x == 1)
+	 return (data->mlx.old_x);
+	if (x > data->mlx.old_x)
+		rotate_right(data);
+	if (x < data->mlx.old_x)
+		rotate_left(data);
+	if (x >= 1275)
+		data->mlx.old_x = 0;
+	else if (x <= 5)
+		data->mlx.old_x = 1279;
+	else
+		data->mlx.old_x = x;
+	return (x);
+}
+
 void	hooking(t_data *data)
 {
-	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
 	mlx_hook(data->mlx.win, 2, (1L<<15), key_handler, data);
+	data->mlx.old_x = mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
+	printf("old %d\n",data->mlx.old_x);
+	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
 	mlx_loop_hook(data->mlx.mlx, ft_raycasting, data);
 }

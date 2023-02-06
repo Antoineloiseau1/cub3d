@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/06 09:15:03 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:58:56 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char *argv[])
 
 	check_args(argc, argv);
 	data = init_data(argv[1]);
+	data->mlx.old_x = 400;
 	get_player_position(data->map.map, data);
 	get_initial_dir(data);
 	data->mlx.mlx = mlx_init();
