@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 10:20:48 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:40:52 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,43 @@
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
 
-void	front_walk(t_data *data)
+void	move_forward(t_data *data)
 {
 	data->map.pos.x += data->map.dir.x * 0.07;
 	data->map.pos.y += data->map.dir.y * 0.07;
 }
 
-void	back_walk(t_data *data)
+void	move_backward(t_data *data)
 {
 	data->map.pos.x -= data->map.dir.x * 0.07;
 	data->map.pos.y -= data->map.dir.y * 0.07;
 }
 
+void	move_left(t_data *data)
+{
+	data->map.pos.x -= data->map.plane.x * 0.07;
+	data->map.pos.y -= data->map.plane.y * 0.07;
+}
+
+void	move_right(t_data *data)
+{
+	data->map.pos.x += data->map.plane.x * 0.07;
+	data->map.pos.y += data->map.plane.y * 0.07;
+}
 
 void	ft_movement(int key, t_data *data)
 {
 	if (key == 13)
-		front_walk(data);
+		move_forward(data);
 	if (key == 1)
-		back_walk(data);
+		move_backward(data);
+	if (key == 0)
+		move_left(data);
+	if (key == 2)
+		move_right(data);
 	ft_raycasting(data);
 }
+
 
 int	ft_close(void)
 {

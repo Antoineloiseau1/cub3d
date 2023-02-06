@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 10:15:38 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:38:52 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,12 @@ int	ft_raycasting(t_data *data)
 		ft_init_data(data, pixel);
 		ft_set_step(data);
 		int side = ft_find_wall(data);
-		(void)side;
-		
-		line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
-//		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 12345645);
+		if (side)
+			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
+		else
+			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
+		line_pixel_put(data, pixel, 0, data->map.draw_start, 12345645);
+		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 0x00ff1100);
 	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 
