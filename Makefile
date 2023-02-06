@@ -21,8 +21,8 @@ LIB		=	libft/libft.a
 
 LFT		= 	-L./libft -lft
 
-#MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
-MLX 	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
+#MLX 	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 CC		=	gcc -g
 
