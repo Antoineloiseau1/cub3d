@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/06 14:27:34 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/07 08:58:03 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char *argv[])
 	data->mlx.right = false;
 	get_player_position(data->map.map, data);
 	get_initial_dir(data);
+	data->mlx.img = NULL;
+	data->mlx.addr = NULL;
 	data->mlx.mlx = mlx_init();
 	data->mlx.win_height = 600;
 	data->mlx.win_width = 800;

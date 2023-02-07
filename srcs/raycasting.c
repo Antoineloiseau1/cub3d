@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 11:11:30 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:15:42 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <math.h>
 #include <mlx.h> 
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "../includes/cub3d.h"
 
@@ -89,9 +90,9 @@ void	ft_find_wall_height(t_data *data, int side)
 	int	lineheight;
 
 	if (side == 0)
-		data->map.perpWallDist = data->map.sideDist.x - data->map.deltaDist.x;
+		data->map.perpWallDist = ft_abs((data->map.tile_x - data->map.pos.x + (1 - data->map.step_x) / 2) / data->map.rayDir.x);
 	else
-		data->map.perpWallDist = data->map.sideDist.y - data->map.deltaDist.y;
+		data->map.perpWallDist = ft_abs((data->map.tile_y - data->map.pos.y + (1 - data->map.step_y) / 2) / data->map.rayDir.y);
 	lineheight = (int)((double)(data->mlx.win_height / data->map.perpWallDist));
 	data->map.draw_start = (-lineheight / 2) + (data->mlx.win_height / 2);
 	if (data->map.draw_start < 0)
@@ -136,6 +137,8 @@ int	ft_raycasting(t_data *data)
 	int	pixel;
 
 	pixel = -1;
+	if (data->mlx.img)
+		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
 	data->mlx.img = mlx_new_image(data->mlx.mlx, data->mlx.win_width, data->mlx.win_height);
 	data->mlx.addr = mlx_get_data_addr(data->mlx.img, &data->mlx.bpp, &data->mlx.line_l, &data->mlx.endian);
 	while (++pixel < data->mlx.win_width)
@@ -147,9 +150,10 @@ int	ft_raycasting(t_data *data)
 			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
 		else
 			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
-		line_pixel_put(data, pixel, 0, data->map.draw_start, 12345645);
-		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 0x00ff1100);
+		line_pixel_put(data, pixel, 0, data->map.draw_start, 0x000000aa);
+		line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 0x00ff7700);
 	}
+	mlx_clear_window(data->mlx.mlx, data->mlx.win);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 
 
