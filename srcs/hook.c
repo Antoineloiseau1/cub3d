@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/08 08:05:18 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 09:08:33 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,50 @@
 
 void	move_forward(t_data *data)
 {
-	data->map.pos.x += data->map.dir.x * FRONT_SPEED;
-	data->map.pos.y += data->map.dir.y * FRONT_SPEED;
+	char c;
+
+	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x + data->map.dir.x * FRONT_SPEED)];
+	if (c != '1')
+		data->map.pos.x += data->map.dir.x * FRONT_SPEED;
+	c = data->map.map[(int)(data->map.pos.y + data->map.dir.y * FRONT_SPEED)][(int)data->map.pos.x];
+	if (c != '1')
+		data->map.pos.y += data->map.dir.y * FRONT_SPEED;
 }
 
 void	move_backward(t_data *data)
 {
-	data->map.pos.x -= data->map.dir.x * BACK_SPEED;
-	data->map.pos.y -= data->map.dir.y * BACK_SPEED;
+	char c;
+
+	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x - data->map.dir.x * FRONT_SPEED)];
+	if (c != '1')
+		data->map.pos.x -= data->map.dir.x * BACK_SPEED;
+	c = data->map.map[(int)(data->map.pos.y - data->map.dir.y * FRONT_SPEED)][(int)data->map.pos.x];
+	if (c != '1')
+		data->map.pos.y -= data->map.dir.y * BACK_SPEED;
 }
 
 void	move_left(t_data *data)
 {
-	data->map.pos.x -= data->map.plane.x * TRANSLATE_SPEED;
-	data->map.pos.y -= data->map.plane.y * TRANSLATE_SPEED;
+	char c;
+
+	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x - data->map.plane.x * TRANSLATE_SPEED)];
+	if (c != '1')
+		data->map.pos.x -= data->map.plane.x * TRANSLATE_SPEED;
+	c = data->map.map[(int)(data->map.pos.y - data->map.plane.y * TRANSLATE_SPEED)][(int)data->map.pos.x];
+	if (c != '1')
+		data->map.pos.y -= data->map.plane.y * TRANSLATE_SPEED;
 }
 
 void	move_right(t_data *data)
 {
-	data->map.pos.x += data->map.plane.x * TRANSLATE_SPEED;
-	data->map.pos.y += data->map.plane.y * TRANSLATE_SPEED;
+	char c;
+
+	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x + data->map.plane.x * TRANSLATE_SPEED)];
+	if (c != '1')
+		data->map.pos.x += data->map.plane.x * TRANSLATE_SPEED;
+	c = data->map.map[(int)(data->map.pos.y + data->map.plane.y * TRANSLATE_SPEED)][(int)data->map.pos.x];
+	if (c != '1')
+		data->map.pos.y += data->map.plane.y * TRANSLATE_SPEED;
 }
 
 void	rotate_right(t_data *data)
@@ -82,7 +106,6 @@ void	rotate_left(t_data *data)
 
 int	move(t_data *data)
 {
-	printf("%d	%d\n", data->mlx.r_left,data->mlx.r_right); 
 	if (data->mlx.up)
 		move_forward(data);
 	if (data->mlx.down)
@@ -139,16 +162,6 @@ int	unpress(int key, t_data *data)
 	return (key);
 }
 
-
-
-
-int	key_handler(int key)
-{
-	if (key == ESCAPE)
-		exit(0);
-	return (0);
-}
-
 int	mouse_handler(int x, int y, t_data *data)
 {
 	(void)y;
@@ -158,10 +171,10 @@ int	mouse_handler(int x, int y, t_data *data)
 		rotate_right(data);
 	if (x < data->mlx.old_x)
 		rotate_left(data);
-	if (x >= 1275)
-		data->mlx.old_x = 0;
-	else if (x <= 5)
-		data->mlx.old_x = 1279;
+	if (x == 1279)
+		data->mlx.old_x = 400; ////////mlx pointer handler
+	else if (x <= 0)
+		data->mlx.old_x = 400;
 	else
 		data->mlx.old_x = x;
 	return (x);
