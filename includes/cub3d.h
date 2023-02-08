@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/06 13:30:22 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/08 07:53:46 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_textures
 
 typedef struct s_mlx
 {
-	void		*img;
-	void		*addr;
 	int			line_l;
 	int			endian;
 	int			bpp;
@@ -44,10 +42,14 @@ typedef struct s_mlx
 	bool		down;
 	bool		left;
 	bool		right;
-	void		*mlx;
-	void		*win;
+	bool		r_left;
+	bool		r_right;
 	int			win_width;
 	int			win_height;
+	void		*img;
+	void		*addr;
+	void		*mlx;
+	void		*win;
 }				t_mlx;
 
 typedef	struct	s_coord

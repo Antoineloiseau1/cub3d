@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/07 10:15:42 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/08 07:47:21 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 
 #include "../includes/cub3d.h"
+#include "../includes/hook.h"
 
 double	ft_abs(double nbr)
 {
@@ -136,6 +137,7 @@ int	ft_raycasting(t_data *data)
 {
 	int	pixel;
 
+	move(data);
 	pixel = -1;
 	if (data->mlx.img)
 		mlx_destroy_image(data->mlx.mlx, data->mlx.img);

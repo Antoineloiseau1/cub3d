@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:25:59 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/06 12:17:09 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/08 07:43:07 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 #include "cub3d.h" 
 
 void    hooking(t_data *data);
+int move(t_data *data);
 
 #endif

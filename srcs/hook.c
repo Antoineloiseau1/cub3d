@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/07 10:28:46 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/08 08:05:18 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 #include <stdlib.h> 
 #include <stdio.h> 
 #include <math.h>
-#include <X11/keysym.h>
-#include <X11/X.h>
+//#include <X11/keysym.h>
+//#include <X11/X.h>
 
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
 
 #define ROTATE_SPEED 0.04
-#define FRONT_SPEED 0.25
-#define BACK_SPEED 0.18
-#define TRANSLATE_SPEED 0.15
-#define ESCAPE 65307
-#define UP 119
-#define DOWN 115
-#define LEFT 97
-#define RIGHT 100
-#define L_ARROW 65361
-#define R_ARROW 65363
+#define FRONT_SPEED 0.09
+#define BACK_SPEED 0.05
+#define TRANSLATE_SPEED 0.07
+#define ESCAPE 53
+#define UP 13
+#define DOWN 1
+#define LEFT 0
+#define RIGHT 2
+#define L_ARROW 123
+#define R_ARROW 124
 
 void	move_forward(t_data *data)
 {
@@ -80,6 +80,29 @@ void	rotate_left(t_data *data)
 	data->map.plane.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.plane.y);
 }
 
+int	move(t_data *data)
+{
+	printf("%d	%d\n", data->mlx.r_left,data->mlx.r_right); 
+	if (data->mlx.up)
+		move_forward(data);
+	if (data->mlx.down)
+		move_backward(data);
+	if (data->mlx.left)
+		move_left(data);
+	if (data->mlx.right)
+		move_right(data);
+	if (data->mlx.r_left)
+		rotate_left(data);
+	if (data->mlx.r_right)
+		rotate_right(data);
+	return (0);
+}
+
+int	ft_close(void)
+{
+	exit(0);
+}
+
 int	press(int key, t_data *data)
 {
 	if (key == UP)
@@ -90,11 +113,12 @@ int	press(int key, t_data *data)
 		data->mlx.left = true;
 	if (key == RIGHT)
 		data->mlx.right = true;
-	printf("%d\n", data->mlx.up);
-	// if (key == L_ARROW)
-	// 	rotate_left(data);
-	// if (key == R_ARROW)
-	// 	rotate_right(data);
+	if (key == L_ARROW)
+		data->mlx.r_left = true;
+	if (key == R_ARROW)
+		data->mlx.r_right = true;
+	if (key == ESCAPE)
+		ft_close();
 	return (key);
 }
 
@@ -108,45 +132,26 @@ int	unpress(int key, t_data *data)
 		data->mlx.left = false;
 	if (key == RIGHT)
 		data->mlx.right = false;
-	return (key);
-}
-
-int	ft_close(void)
-{
-	exit(0);
-}
-
-int	move(int key, t_data *data)
-{
-	if (key == UP)
-		move_forward(data);
-	if (key == DOWN)
-		move_backward(data);
-	if (key == LEFT)
-		move_left(data);
-	if (key == RIGHT)
-		move_right(data);
 	if (key == L_ARROW)
-		rotate_left(data);
+		data->mlx.r_left = false;
 	if (key == R_ARROW)
-		rotate_right(data);
+		data->mlx.r_right = false;
 	return (key);
 }
 
 
-int	key_handler(int key, t_data *data)
+
+
+int	key_handler(int key)
 {
-	printf("%d\n", key);
 	if (key == ESCAPE)
 		exit(0);
-	move(key, data);
 	return (0);
 }
 
 int	mouse_handler(int x, int y, t_data *data)
 {
 	(void)y;
-	printf("x: %d y: %d\n", x, y);
 	if (x == 1)
 	 return (data->mlx.old_x);
 	if (x > data->mlx.old_x)
@@ -164,12 +169,10 @@ int	mouse_handler(int x, int y, t_data *data)
 
 void	hooking(t_data *data)
 {
-	mlx_key_hook(data->mlx.win,key_handler, data);
-	// if (data->mlx.up)
-	// 	mlx_key_hook(data->mlx.mlx, move, data);
-	// //mlx_hook(data->mlx.win, 3, 0, unpress, data);
-//	mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
 	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
+	mlx_hook(data->mlx.win, 2, 0, press, data);
 	mlx_loop_hook(data->mlx.mlx, ft_raycasting, data);
+	mlx_hook(data->mlx.win, 3, 0, unpress, data);
+	mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
 	
 }
