@@ -6,13 +6,13 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/08 09:17:01 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:52:14 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> 
+#include <stdio.h>
 #include <math.h>
-#include <mlx.h> 
+#include <mlx.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -29,57 +29,57 @@ double	ft_abs(double nbr)
 //calculs de base, pythagore et tout
 void	ft_init_data(t_data *data, int pixel)
 {	
-	double ratio;
+	double	ratio;
 
-	ratio = (pixel - ((double)data->mlx.win_width / 2)) / ((double)data->mlx.win_width / 2);
+	ratio = (pixel - ((double)data->mlx.win_width / 2))
+		/ ((double)data->mlx.win_width / 2);
 	data->map.rayDir.x = data->map.dir.x + (data->map.plane.x * ratio);
 	data->map.rayDir.y = data->map.dir.y + (data->map.plane.y * ratio);
 	data->map.tile_x = (int)data->map.pos.x;
 	data->map.tile_y = (int)data->map.pos.y;
-	data->map.deltaDist.x = sqrt(1 + (pow(data->map.rayDir.y, 2) / pow(data->map.rayDir.x, 2)));
-	data->map.deltaDist.y = sqrt(1 + (pow(data->map.rayDir.x, 2) / pow(data->map.rayDir.y, 2)));
-	// if (data->map.rayDir.x == 0.0)
-	// 	data->map.deltaDist.x = 1e30;
-	// else
-	// 	data->map.deltaDist.x = sqrt(1 + ((data->map.rayDir.y * data->map.rayDir.y) / (data->map.rayDir.x * data->map.rayDir.x)));
-	// if (data->map.rayDir.y == 0.0)
-	// 	data->map.deltaDist.y = 1e30;
-	// else
-	// 	data->map.deltaDist.y = sqrt(1 + ((data->map.rayDir.x * data->map.rayDir.x) / (data->map.rayDir.y * data->map.rayDir.y)));
+	data->map.deltaDist.x = sqrt(1 + (pow(data->map.rayDir.y, 2)
+				/ pow(data->map.rayDir.x, 2)));
+	data->map.deltaDist.y = sqrt(1 + (pow(data->map.rayDir.x, 2)
+				/ pow(data->map.rayDir.y, 2)));
 }
+
 //dans quel sens on avance/regarde
 void	ft_set_step(t_data *data)
 {
 	if (data->map.rayDir.x < 0)
 	{
 		data->map.step_x = -1;
-		data->map.sideDist.x = (data->map.pos.x - data->map.tile_x) * data->map.deltaDist.x;
+		data->map.sideDist.x = (data->map.pos.x - data->map.tile_x)
+			* data->map.deltaDist.x;
 	}
 	else
 	{
 		data->map.step_x = 1;
-		data->map.sideDist.x = (data->map.tile_x + 1.0 - data->map.pos.x) * data->map.deltaDist.x;
+		data->map.sideDist.x = (data->map.tile_x + 1.0 - data->map.pos.x)
+			* data->map.deltaDist.x;
 	}
 	if (data->map.rayDir.y < 0)
 	{
 		data->map.step_y = -1;
-		data->map.sideDist.y = (data->map.pos.y - data->map.tile_y) * data->map.deltaDist.y;
+		data->map.sideDist.y = (data->map.pos.y - data->map.tile_y)
+			* data->map.deltaDist.y;
 	}
 	else
 	{
 		data->map.step_y = 1;
-		data->map.sideDist.y = (data->map.tile_y + 1.0 - data->map.pos.y) * data->map.deltaDist.y;
+		data->map.sideDist.y = (data->map.tile_y + 1.0 - data->map.pos.y)
+			* data->map.deltaDist.y;
 	}
-
 }
 
-void	line_pixel_put(t_data *data, int line_to_draw, int start, int end, int color)
+void	line_pixel_put(t_data *data, int start, int end, int color)
 {
-	char *mem_pix;
-	
+	char	*mem_pix;
+
 	while (start != end)
 	{
-		mem_pix = data->mlx.addr + (start * data->mlx.line_l + line_to_draw * (data->mlx.bpp / 8));
+		mem_pix = data->mlx.addr + (start * data->mlx.line_l
+				+ data->map.pixel * (data->mlx.bpp / 8));
 		*(unsigned int *)mem_pix = color;
 		start++;
 	}
@@ -91,9 +91,11 @@ void	ft_find_wall_height(t_data *data, int side)
 	int	lineheight;
 
 	if (side == 0)
-		data->map.perpWallDist = ft_abs((data->map.tile_x - data->map.pos.x + (1 - data->map.step_x) / 2) / data->map.rayDir.x);
+		data->map.perpWallDist = ft_abs((data->map.tile_x - data->map.pos.x
+					+ (1 - data->map.step_x) / 2) / data->map.rayDir.x);
 	else
-		data->map.perpWallDist = ft_abs((data->map.tile_y - data->map.pos.y + (1 - data->map.step_y) / 2) / data->map.rayDir.y);
+		data->map.perpWallDist = ft_abs((data->map.tile_y - data->map.pos.y
+					+ (1 - data->map.step_y) / 2) / data->map.rayDir.y);
 	lineheight = (int)((double)(data->mlx.win_height / data->map.perpWallDist));
 	data->map.draw_start = (-lineheight / 2) + (data->mlx.win_height / 2);
 	if (data->map.draw_start < 0)
@@ -101,8 +103,8 @@ void	ft_find_wall_height(t_data *data, int side)
 	data->map.draw_end = (lineheight / 2) + (data->mlx.win_height / 2);
 	if (data->map.draw_end >= data->mlx.win_height)
 		data->map.draw_end = data->mlx.win_height - 1;
-
 }
+
 //a combien de '"cases"' est le mur
 int	ft_find_wall(t_data *data)
 {
@@ -128,43 +130,48 @@ int	ft_find_wall(t_data *data)
 			hit = 1;
 	}
 	ft_find_wall_height(data, side);
-	//data->map.tile_x = (int)data->map.pos.x; /////debug
-	//data->map.tile_y = (int)data->map.pos.y;
 	return (side);
+}
+
+void	color_choice(t_data *data)
+{
+	int	side;
+
+	ft_init_data(data, data->map.pixel);
+	ft_set_step(data);
+	side = ft_find_wall(data);
+	if (side)
+		line_pixel_put(data, data->map.draw_start,
+			data->map.draw_end, 0x5599ccff);
+	else
+		line_pixel_put(data, data->map.draw_start,
+			data->map.draw_end, 0x7799ccff);
+	line_pixel_put(data, 0, data->map.draw_start, 0x44ffcc99);
+	if (data->map.draw_end == data->mlx.win_height - 1)
+		line_pixel_put(data, data->map.draw_end + 1,
+			data->mlx.win_height, 0x00ccffff);
+	else
+		line_pixel_put(data, data->map.draw_end,
+			data->mlx.win_height, 0x33ccffff);
 }
 
 int	ft_raycasting(t_data *data)
 {
-	int	pixel;
-
-	move(data);
-	pixel = -1;
+	data->map.pixel = -1;
 	if (data->mlx.img)
 		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
-	data->mlx.img = mlx_new_image(data->mlx.mlx, data->mlx.win_width, data->mlx.win_height);
-	data->mlx.addr = mlx_get_data_addr(data->mlx.img, &data->mlx.bpp, &data->mlx.line_l, &data->mlx.endian);
-	while (++pixel < data->mlx.win_width)
+	data->mlx.img = mlx_new_image(data->mlx.mlx,
+			data->mlx.win_width, data->mlx.win_height);
+	data->mlx.addr = mlx_get_data_addr(data->mlx.img, &data->mlx.bpp,
+			&data->mlx.line_l, &data->mlx.endian);
+	while (++data->map.pixel < data->mlx.win_width)
 	{
-		ft_init_data(data, pixel);
-		ft_set_step(data);
-		int side = ft_find_wall(data);
-		if (side)
-			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 100);
-		else
-			line_pixel_put(data, pixel, data->map.draw_start, data->map.draw_end, 150);
-		line_pixel_put(data, pixel, 0, data->map.draw_start, 0x000000aa);
-		if (data->map.draw_end == data->mlx.win_height - 1)
-			line_pixel_put(data, pixel, data->map.draw_end + 1, data->mlx.win_height, 0x00ff7700);
-		else
-			line_pixel_put(data, pixel, data->map.draw_end, data->mlx.win_height, 0x00ff7700);
+		color_choice(data);
 	}
 	mlx_clear_window(data->mlx.mlx, data->mlx.win);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-
-
 	return (0);
 }
-
 
 //player position on the map;
 void	get_player_position(char **map, t_data *data)
@@ -191,42 +198,46 @@ void	get_player_position(char **map, t_data *data)
 	}
 }
 
+//to gain space for norm
+void	set_initial_dir_data(t_data *data, double p_x, double p_y)
+{
+	data->map.plane.x = p_x;
+	data->map.plane.y = p_y;
+}
+
 //player initial dir
 void	get_initial_dir(t_data *data)
 {
 	char	c;
 
-	c = data->map.map[data->map.tile_y][data->map.tile_x];
 	data->map.dir.y = 0;
 	data->map.dir.x = 0;
+	c = data->map.map[data->map.tile_y][data->map.tile_x];
 	if (c == 'N')
 	{
-		data->map.plane.x = 0.66;
-		data->map.plane.y = 0;
+		set_initial_dir_data(data, 0.66, 0);
 		data->map.dir.y = -1;
 	}
 	if (c == 'S')
 	{
-		data->map.plane.x = -0.66;
-		data->map.plane.y = 0;
+		set_initial_dir_data(data, -0.66, 0);
 		data->map.dir.y = 1;
 	}
 	if (c == 'E')
 	{
-		data->map.plane.x = 0;
-		data->map.plane.y = 0.66;
+		set_initial_dir_data(data, 0, 0.66);
 		data->map.dir.x = 1;
 	}
 	if (c == 'W')
 	{
-		data->map.plane.x = 0;
-		data->map.plane.y = -0.66;
+		set_initial_dir_data(data, 0, -0.66);
 		data->map.dir.x = -1;
 	}
 }
 
 int	ft_init_raycasting(t_data *data)
 {
+	move(data);
 	ft_raycasting(data);
 	return (0);
 }

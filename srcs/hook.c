@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/08 09:08:33 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:31:29 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define ROTATE_SPEED 0.04
 #define FRONT_SPEED 0.09
 #define BACK_SPEED 0.05
-#define TRANSLATE_SPEED 0.07
+#define TRANS_SPEED 0.07
 #define ESCAPE 53
 #define UP 13
 #define DOWN 1
@@ -34,74 +34,90 @@
 
 void	move_forward(t_data *data)
 {
-	char c;
+	char	c;
 
-	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x + data->map.dir.x * FRONT_SPEED)];
+	c = data->map.map[(int)data->map.pos.y]
+	[(int)(data->map.pos.x + data->map.dir.x * FRONT_SPEED)];
 	if (c != '1')
 		data->map.pos.x += data->map.dir.x * FRONT_SPEED;
-	c = data->map.map[(int)(data->map.pos.y + data->map.dir.y * FRONT_SPEED)][(int)data->map.pos.x];
+	c = data->map.map[(int)(data->map.pos.y + data->map.dir.y * FRONT_SPEED)]
+	[(int)data->map.pos.x];
 	if (c != '1')
 		data->map.pos.y += data->map.dir.y * FRONT_SPEED;
 }
 
 void	move_backward(t_data *data)
 {
-	char c;
+	char	c;
 
-	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x - data->map.dir.x * FRONT_SPEED)];
+	c = data->map.map[(int)data->map.pos.y]
+	[(int)(data->map.pos.x - data->map.dir.x * FRONT_SPEED)];
 	if (c != '1')
 		data->map.pos.x -= data->map.dir.x * BACK_SPEED;
-	c = data->map.map[(int)(data->map.pos.y - data->map.dir.y * FRONT_SPEED)][(int)data->map.pos.x];
+	c = data->map.map[(int)(data->map.pos.y - data->map.dir.y * FRONT_SPEED)]
+	[(int)data->map.pos.x];
 	if (c != '1')
 		data->map.pos.y -= data->map.dir.y * BACK_SPEED;
 }
 
 void	move_left(t_data *data)
 {
-	char c;
+	char	c;
 
-	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x - data->map.plane.x * TRANSLATE_SPEED)];
+	c = data->map.map[(int)data->map.pos.y]
+	[(int)(data->map.pos.x - data->map.plane.x * TRANS_SPEED)];
 	if (c != '1')
-		data->map.pos.x -= data->map.plane.x * TRANSLATE_SPEED;
-	c = data->map.map[(int)(data->map.pos.y - data->map.plane.y * TRANSLATE_SPEED)][(int)data->map.pos.x];
+		data->map.pos.x -= data->map.plane.x * TRANS_SPEED;
+	c = data->map.map[(int)(data->map.pos.y - data->map.plane.y * TRANS_SPEED)]
+	[(int)data->map.pos.x];
 	if (c != '1')
-		data->map.pos.y -= data->map.plane.y * TRANSLATE_SPEED;
+		data->map.pos.y -= data->map.plane.y * TRANS_SPEED;
 }
 
 void	move_right(t_data *data)
 {
-	char c;
+	char	c;
 
-	c = data->map.map[(int)data->map.pos.y][(int)(data->map.pos.x + data->map.plane.x * TRANSLATE_SPEED)];
+	c = data->map.map[(int)data->map.pos.y]
+	[(int)(data->map.pos.x + data->map.plane.x * TRANS_SPEED)];
 	if (c != '1')
-		data->map.pos.x += data->map.plane.x * TRANSLATE_SPEED;
-	c = data->map.map[(int)(data->map.pos.y + data->map.plane.y * TRANSLATE_SPEED)][(int)data->map.pos.x];
+		data->map.pos.x += data->map.plane.x * TRANS_SPEED;
+	c = data->map.map[(int)(data->map.pos.y + data->map.plane.y * TRANS_SPEED)]
+	[(int)data->map.pos.x];
 	if (c != '1')
-		data->map.pos.y += data->map.plane.y * TRANSLATE_SPEED;
+		data->map.pos.y += data->map.plane.y * TRANS_SPEED;
 }
 
 void	rotate_right(t_data *data)
 {
-	double save;
-	
+	double	save;
+
 	save = data->map.dir.x;
-	data->map.dir.x = (cos(ROTATE_SPEED) * data->map.dir.x - sin(ROTATE_SPEED) * data->map.dir.y);
-	data->map.dir.y = (sin(ROTATE_SPEED) * save + cos(ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.x = (cos(ROTATE_SPEED) * data->map.dir.x
+			- sin(ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.y = (sin(ROTATE_SPEED) * save
+			+ cos(ROTATE_SPEED) * data->map.dir.y);
 	save = data->map.plane.x;
-	data->map.plane.x = (cos(ROTATE_SPEED) * data->map.plane.x - sin(ROTATE_SPEED) * data->map.plane.y);
-	data->map.plane.y = (sin(ROTATE_SPEED) * save + cos(ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.x = (cos(ROTATE_SPEED) * data->map.plane.x
+			- sin(ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.y = (sin(ROTATE_SPEED) * save
+			+ cos(ROTATE_SPEED) * data->map.plane.y);
 }
 
 void	rotate_left(t_data *data)
 {
-	double save;
-	
+	double	save;
+
 	save = data->map.dir.x;
-	data->map.dir.x = (cos(-ROTATE_SPEED) * data->map.dir.x - sin(-ROTATE_SPEED) * data->map.dir.y);
-	data->map.dir.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.x = (cos(-ROTATE_SPEED) * data->map.dir.x
+			- sin(-ROTATE_SPEED) * data->map.dir.y);
+	data->map.dir.y = (sin(-ROTATE_SPEED) * save
+			+ cos(-ROTATE_SPEED) * data->map.dir.y);
 	save = data->map.plane.x;
-	data->map.plane.x = (cos(-ROTATE_SPEED) * data->map.plane.x - sin(-ROTATE_SPEED) * data->map.plane.y);
-	data->map.plane.y = (sin(-ROTATE_SPEED) * save + cos(-ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.x = (cos(-ROTATE_SPEED) * data->map.plane.x
+			- sin(-ROTATE_SPEED) * data->map.plane.y);
+	data->map.plane.y = (sin(-ROTATE_SPEED) * save
+			+ cos(-ROTATE_SPEED) * data->map.plane.y);
 }
 
 int	move(t_data *data)
@@ -162,17 +178,18 @@ int	unpress(int key, t_data *data)
 	return (key);
 }
 
+//pointer handle maybe
 int	mouse_handler(int x, int y, t_data *data)
 {
 	(void)y;
 	if (x == 1)
-	 return (data->mlx.old_x);
+		return (data->mlx.old_x);
 	if (x > data->mlx.old_x)
 		rotate_right(data);
 	if (x < data->mlx.old_x)
 		rotate_left(data);
-	if (x == 1279)
-		data->mlx.old_x = 400; ////////mlx pointer handler
+	if (x >= 1279)
+		data->mlx.old_x = 1270;
 	else if (x <= 0)
 		data->mlx.old_x = 400;
 	else
@@ -184,8 +201,7 @@ void	hooking(t_data *data)
 {
 	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
 	mlx_hook(data->mlx.win, 2, 0, press, data);
-	mlx_loop_hook(data->mlx.mlx, ft_raycasting, data);
+	mlx_loop_hook(data->mlx.mlx, ft_init_raycasting, data);
 	mlx_hook(data->mlx.win, 3, 0, unpress, data);
-	mlx_hook(data->mlx.win, 6, (1L<<15), mouse_handler, data);
-	
+	mlx_hook(data->mlx.win, 6, (1L << 15), mouse_handler, data);
 }

@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/08 08:12:06 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 11:17:10 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[])
 
 	check_args(argc, argv);
 	data = init_data(argv[1]);
-	data->mlx.up = false; ////////pas beau
+	data->mlx.up = false;
 	data->mlx.down = false;
 	data->mlx.left = false;
 	data->mlx.right = false;
@@ -36,9 +36,10 @@ int	main(int argc, char *argv[])
 	data->mlx.mlx = mlx_init();
 	data->mlx.win_height = 600;
 	data->mlx.win_width = 800;
-	data->mlx.win = mlx_new_window(data->mlx.mlx, data->mlx.win_width, data->mlx.win_height, "cub3d");
+	data->mlx.win = mlx_new_window(data->mlx.mlx, data->mlx.win_width,
+			data->mlx.win_height, "cub3d");
 	hooking(data);
 	mlx_loop(data->mlx.mlx);
-	free_data(data); //// is this useful?
+	free_data(data);
 	return (0);
 }

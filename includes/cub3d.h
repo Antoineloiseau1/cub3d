@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/08 07:53:46 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:45:31 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef struct s_map
 	t_coord	pos;
 	t_coord	dir;
 	t_coord	plane;
-	t_coord	camera;
 	t_coord	rayDir;
 	t_coord	sideDist;
 	t_coord	deltaDist;
 	double	perpWallDist;
+	int	pixel;
 	int	step_x;
 	int	step_y;
 	int	tile_x;

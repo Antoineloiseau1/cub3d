@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:57:19 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/01 12:06:57 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:53:43 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,17 @@ int	map_check_ones_in_line(char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] && line[i] != '1') //////////debug
-	{
-//		printf("%d	%c\n", i, line[i]); 
+	if (line[i] && line[i] != '1')
 		return (1);
-	}
 	i = ft_strlen(line) - 1;
 	while (i != 0 && (line[i] == ' ' || line[i] == '\n'))
 		i--;
-	if (line[i] && line[i] != '1') ////////debug
-	{
-//		printf("%d	%c\n", i, line[i]); 
+	if (line[i] && line[i] != '1')
 		return (1);
-	}
 	return (0);
 }
 
-int	map_check_zeros_in_line(char *map[], int line) ////////////////debug
+int	map_check_zeros_in_line(char *map[], int line)
 {
 	int	i;
 
@@ -74,25 +68,15 @@ int	map_check_zeros_in_line(char *map[], int line) ////////////////debug
 		if (map[line][i] == '0')
 		{
 			if (i && (!map[line][i - 1] || ft_isspace(map[line][i - 1])))
-			{
-//				printf("%d	%s\n c", line, map[line]); 
 				return (1);
-			}
-			if (map[line][i] && (!map[line][i + 1] || ft_isspace(map[line][i + 1])))
-			{
-//				printf("%d	%s\n d", line, map[line]); 
+			if (map[line][i] && (!map[line][i + 1]
+						|| ft_isspace(map[line][i + 1])))
 				return (1);
-			}
 			if (line && (!map[line - 1][i] || ft_isspace(map[line - 1][i])))
-			{
-//				printf("%d	%s\n e", line, map[line]); 
 				return (1);
-			}
-			if (!(i < ft_strlen(map[line + 1])) || (!map[line + 1][i] || ft_isspace(map[line + 1][i])))
-			{
-//				printf("%d	%s\n f", line, map[line]); 
+			if (!(i < ft_strlen(map[line + 1])) || (!map[line + 1][i]
+				|| ft_isspace(map[line + 1][i])))
 				return (1);
-			}
 		}
 		i++;
 	}
