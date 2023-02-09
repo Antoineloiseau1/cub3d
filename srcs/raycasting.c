@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/08 12:52:14 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/09 10:16:13 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #include "../includes/cub3d.h"
 #include "../includes/hook.h"
+#include "../libft/libft.h" 
 
 double	ft_abs(double nbr)
 {
@@ -146,13 +147,13 @@ void	color_choice(t_data *data)
 	else
 		line_pixel_put(data, data->map.draw_start,
 			data->map.draw_end, 0x7799ccff);
-	line_pixel_put(data, 0, data->map.draw_start, 0x44ffcc99);
+	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
 	if (data->map.draw_end == data->mlx.win_height - 1)
 		line_pixel_put(data, data->map.draw_end + 1,
 			data->mlx.win_height, 0x00ccffff);
 	else
 		line_pixel_put(data, data->map.draw_end,
-			data->mlx.win_height, 0x33ccffff);
+			data->mlx.win_height,data->textures->floor->total);
 }
 
 int	ft_raycasting(t_data *data)

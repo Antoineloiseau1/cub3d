@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/01/31 15:31:08 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/09 06:59:48 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_color	*get_rgb_values(char *raw_values)
 	colors->green = (int)ft_atoi(values[1]);
 	colors->blue = (int)ft_atoi(values[2]);
 	free_chartab(values);
+	printf("%d	%d	%d\n", colors->red, colors->green, colors->blue); 
 	return (colors);
 }
 

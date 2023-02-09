@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/08 12:45:31 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/09 10:16:25 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_color
 	unsigned char	red;
 	unsigned char	green;
 	unsigned char	blue;
+	int				total;
 }t_color;
 
 typedef struct s_textures

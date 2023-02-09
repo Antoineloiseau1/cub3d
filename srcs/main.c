@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/08 11:17:10 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/09 08:12:12 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../includes/cub3d.h"
 #include "../includes/hook.h"
 #include "../includes/raycasting.h" 
+#include "../includes/utils.h"
 
 int	main(int argc, char *argv[])
 {
@@ -23,6 +24,7 @@ int	main(int argc, char *argv[])
 
 	check_args(argc, argv);
 	data = init_data(argv[1]);
+	puts(dec_to_hexa(data->textures->ceil->red));
 	data->mlx.up = false;
 	data->mlx.down = false;
 	data->mlx.left = false;
