@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/09 10:16:25 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 09:18:18 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,23 @@ typedef struct s_color
 	int				total;
 }t_color;
 
+typedef struct s_image
+{
+	char *path;
+	char *addr;
+	int	bpp;
+	int	line_l;
+	int	endian;
+	int	width;
+	int	height;
+}			t_image;
+
 typedef struct s_textures
 {
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
+	t_image north;
+	t_image south;
+	t_image east;
+	t_image west;
 	t_color	*floor;
 	t_color	*ceil;
 }t_textures;
@@ -74,6 +85,8 @@ typedef struct s_map
 	int	step_y;
 	int	tile_x;
 	int	tile_y;
+	double wall_hit;
+	double tex_x;
 	int	draw_start;
 	int	draw_end;
 }			t_map;

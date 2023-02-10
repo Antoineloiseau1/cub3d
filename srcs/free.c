@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:56:58 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/01 12:08:26 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 07:20:02 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	free_chartab(char *tab[])
 
 void	free_textures(t_textures *textures)
 {
-	if (textures->north)
-		free(textures->north);
-	if (textures->south)
-		free(textures->south);
-	if (textures->east)
-		free(textures->east);
-	if (textures->west)
-		free(textures->west);
+	if (textures->north.path)
+		free(textures->north.path);
+	if (textures->south.path)
+		free(textures->south.path);
+	if (textures->east.path)
+		free(textures->east.path);
+	if (textures->west.path)
+		free(textures->west.path);
 	if (textures->ceil)
 		free(textures->ceil);
 	if (textures->floor)

@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:37:38 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 14:14:43 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/10 07:21:29 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	check_textures(t_textures *textures)
 		return (1);
 	if (textures->floor == NULL)
 		return (1);
-	if (textures->north == NULL)
+	if (textures->north.path == NULL)
 		return (1);
-	if (textures->south == NULL)
+	if (textures->south.path == NULL)
 		return (1);
-	if (textures->east == NULL)
+	if (textures->east.path == NULL)
 		return (1);
-	if (textures->west == NULL)
+	if (textures->west.path == NULL)
 		return (1);
 	return (0);
 }

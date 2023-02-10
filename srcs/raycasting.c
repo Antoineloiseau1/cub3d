@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/09 10:16:13 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 09:53:10 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,6 @@ void	ft_set_step(t_data *data)
 	}
 }
 
-void	line_pixel_put(t_data *data, int start, int end, int color)
-{
-	char	*mem_pix;
-
-	while (start != end)
-	{
-		mem_pix = data->mlx.addr + (start * data->mlx.line_l
-				+ data->map.pixel * (data->mlx.bpp / 8));
-		*(unsigned int *)mem_pix = color;
-		start++;
-	}
-}
 
 //selon la distance mur-joueur et s'il est de face ou de profil, taille du mur
 void	ft_find_wall_height(t_data *data, int side)
@@ -134,19 +122,69 @@ int	ft_find_wall(t_data *data)
 	return (side);
 }
 
+void	wall_pixel_put(t_data *data, double factor)
+{
+	char	*mem_pix;
+	float	true_i;
+	int		i;
+	unsigned int tex_color;
+
+	i = data->map.draw_start;
+	true_i = data->map.draw_start;
+	while (i != 300)
+	{
+		mem_pix = data->textures->north.addr + ((i - data->map.draw_start) * data->textures->north.line_l
+				+ (int)data->map.tex_x * (data->textures->north.bpp / 8));
+		printf("addr %p\n", data->textures->north.addr);
+		printf("pix  %p\n", mem_pix); 
+		error(2, "test");
+		tex_color = (unsigned int)mem_pix;
+		mem_pix = data->mlx.addr + (i * data->mlx.line_l
+				+ data->map.pixel * (data->mlx.bpp / 8));
+		*(unsigned int *)mem_pix = tex_color;
+		true_i += factor;
+		i = (int)true_i;
+	}
+}
+
+void	line_pixel_put(t_data *data, int start, int end, int color)
+{
+	char	*mem_pix;
+
+	while (start != end)
+	{
+		mem_pix = data->mlx.addr + (start * data->mlx.line_l
+				+ data->map.pixel * (data->mlx.bpp / 8));
+		*(unsigned int *)mem_pix = color;
+		start++;
+	}
+}
+
 void	color_choice(t_data *data)
 {
 	int	side;
+	float	factor;
 
 	ft_init_data(data, data->map.pixel);
 	ft_set_step(data);
 	side = ft_find_wall(data);
-	if (side)
-		line_pixel_put(data, data->map.draw_start,
-			data->map.draw_end, 0x5599ccff);
+	if (!side)
+		data->map.wall_hit = data->map.pos.y + data->map.perpWallDist * data->map.rayDir.y;
 	else
-		line_pixel_put(data, data->map.draw_start,
-			data->map.draw_end, 0x7799ccff);
+		data->map.wall_hit = data->map.pos.x + data->map.perpWallDist * data->map.rayDir.x;
+	data->map.wall_hit -= floor(data->map.wall_hit);
+	data->map.tex_x = (int)(data->map.wall_hit * (double)(300)); /////////data->texture->face.width
+	if (!side && data->map.rayDir.x > 0)
+		data->map.tex_x = 300 - data->map.tex_x - 1; //300 == data->texture->face.width
+	else if (side && data->map.rayDir.y < 0)
+		data->map.tex_x = 300 - data->map.tex_x - 1; //300 == data->texture->face.width
+	factor = (double)(data->map.draw_end - data->map.draw_start) / 300.0;
+	///////////////////
+	if (side)
+		wall_pixel_put(data, factor);
+	else
+		wall_pixel_put(data, factor);
+	///////////////////
 	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
 	if (data->map.draw_end == data->mlx.win_height - 1)
 		line_pixel_put(data, data->map.draw_end + 1,
@@ -158,6 +196,7 @@ void	color_choice(t_data *data)
 
 int	ft_raycasting(t_data *data)
 {
+
 	data->map.pixel = -1;
 	if (data->mlx.img)
 		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
@@ -169,6 +208,7 @@ int	ft_raycasting(t_data *data)
 	{
 		color_choice(data);
 	}
+//	error(1, "aled"); //stop it
 	mlx_clear_window(data->mlx.mlx, data->mlx.win);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);

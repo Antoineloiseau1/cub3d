@@ -6,7 +6,7 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/09 06:59:48 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 07:20:55 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,22 @@ t_textures	*parse_textures(char *file[])
 
 	textures = malloc(sizeof(t_textures));
 	i = 0;
-	textures->north = NULL;
-	textures->south = NULL;
-	textures->east = NULL;
-	textures->west = NULL;
+	textures->north.path = NULL;
+	textures->south.path = NULL;
+	textures->east.path = NULL;
+	textures->west.path = NULL;
 	while (file[i])
 	{
 		if (!file[i][0])
 			i++;
-		if (textures->north == NULL)
-			textures->north = search_texture_id(file[i], "NO");
-		if (textures->south == NULL)
-			textures->south = search_texture_id(file[i], "SO");
-		if (textures->east == NULL)
-			textures->east = search_texture_id(file[i], "EA");
-		if (textures->west == NULL)
-			textures->west = search_texture_id(file[i], "WE");
+		if (textures->north.path == NULL)
+			textures->north.path = search_texture_id(file[i], "NO");
+		if (textures->south.path == NULL)
+			textures->south.path = search_texture_id(file[i], "SO");
+		if (textures->east.path == NULL)
+			textures->east.path = search_texture_id(file[i], "EA");
+		if (textures->west.path == NULL)
+			textures->west.path = search_texture_id(file[i], "WE");
 		i++;
 	}
 	parse_colors(file, textures);
