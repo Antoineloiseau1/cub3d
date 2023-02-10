@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/08 12:31:29 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 13:45:10 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include "../includes/cub3d.h"
 
 #define ROTATE_SPEED 0.04
-#define FRONT_SPEED 0.09
+#define FRONT_SPEED 0.05
 #define BACK_SPEED 0.05
-#define TRANS_SPEED 0.07
+#define TRANS_SPEED 0.05
 #define ESCAPE 53
 #define UP 13
 #define DOWN 1

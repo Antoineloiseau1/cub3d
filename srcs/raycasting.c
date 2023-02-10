@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/10 13:40:00 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:49:38 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	color_choice(t_data *data)
 		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
 	else if (!side && data->map.rayDir.y < 0)
 		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
-	factor = 1.0 * data->textures->north.height / (data->map.draw_end - data->map.draw_start);
+	factor = 1.0 * data->textures->north.height / (int)((double)(data->mlx.win_height / data->map.perpWallDist));
 	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
 	if (data->map.draw_end == data->mlx.win_height - 1)
 		line_pixel_put(data, data->map.draw_end + 1,
