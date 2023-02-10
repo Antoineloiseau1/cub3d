@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/10 09:18:18 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/10 13:18:24 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ typedef struct s_map
 	int	step_y;
 	int	tile_x;
 	int	tile_y;
-	double wall_hit;
-	double tex_x;
+	double	wall_hit;
+	int		tex_x;
 	int	draw_start;
 	int	draw_end;
 }			t_map;
