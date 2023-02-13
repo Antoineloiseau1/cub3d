@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/13 07:44:00 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 08:16:52 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	wall_pixel_put(t_data *data, float factor)
 
 	i = 0;
 	true_i = 0;
-	printf("%d\n", data->map.tex_x); 
 	while (data->map.draw_start != data->map.draw_end && i < data->textures->north.width)
 	{
 		while (data->map.draw_end >= data->mlx.win_height)
@@ -173,9 +172,9 @@ void	color_choice(t_data *data)
 		data->map.wall_hit = data->map.pos.x + data->map.perpWallDist * data->map.rayDir.x;
 	data->map.wall_hit -= floor(data->map.wall_hit);
 	data->map.tex_x = (int)((data->map.wall_hit * (double)(data->textures->north.width)));
-	if (!side && data->map.rayDir.x > 0)
+	if (!side && data->map.rayDir.x < 0)
 		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
-	else if (side && data->map.rayDir.y < 0)
+	else if (side && data->map.rayDir.y > 0)
 		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
 	factor = 1.0 * data->textures->north.height / (int)((double)(data->mlx.win_height / data->map.perpWallDist));
 	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
