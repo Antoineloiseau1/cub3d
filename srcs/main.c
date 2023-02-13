@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/10 10:02:59 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 09:29:49 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,18 @@
 #include "../includes/raycasting.h" 
 #include "../includes/utils.h"
 
-void	mlx_values_init(t_data *data)
+void	open_images(t_data *data, t_image *dir)
 {
 	void	*img;
 
+	img = mlx_xpm_file_to_image(data->mlx.mlx, dir->path, &dir->width, &dir->height );
+	if (!img)
+		error(1, "can't open texture");
+	dir->addr = mlx_get_data_addr(img, &dir->bpp, &dir->line_l, &dir->endian);	
+}
+
+void	mlx_values_init(t_data *data)
+{
 	data->mlx.up = false;
 	data->mlx.down = false;
 	data->mlx.left = false;
@@ -32,10 +40,10 @@ void	mlx_values_init(t_data *data)
 	data->mlx.addr = NULL;
 	data->mlx.win_height = 600;
 	data->mlx.win_width = 800;
-	img = mlx_xpm_file_to_image(data->mlx.mlx, data->textures->north.path, &data->textures->north.width, &data->textures->north.height );
-	if (!img)
-		error(1, "can't open texture");
-	data->textures->north.addr = mlx_get_data_addr(img, &data->textures->north.bpp, &data->textures->north.line_l, &data->textures->north.endian);
+	open_images(data, &data->textures->north);
+	open_images(data, &data->textures->south);
+	open_images(data, &data->textures->east);
+	open_images(data, &data->textures->west);
 }
 
 int	main(int argc, char *argv[])

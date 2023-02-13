@@ -1,7 +1,7 @@
 NO ./textures/grenouille.xpm	
- SO ./path_to_the_south_texture
-    WE ./path_to_the_west_texture		
- EA ./path_to_the_east_texture    
+ SO ./textures/mariowall.xpm	
+    WE ./textures/carrelage.xpm			
+ EA ./textures/sang.xpm	   
 F	204,255,255   
 C   255,204,153				
 

@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/13 08:16:52 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:31:48 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	ft_find_wall(t_data *data)
 	return (side);
 }
 
-void	wall_pixel_put(t_data *data, float factor)
+void	wall_pixel_put(t_data *data, float factor, t_image current)
 {
 	char			*mem_pix;
 	int				i;
@@ -129,14 +129,14 @@ void	wall_pixel_put(t_data *data, float factor)
 
 	i = 0;
 	true_i = 0;
-	while (data->map.draw_start != data->map.draw_end && i < data->textures->north.width)
+	while (data->map.draw_start != data->map.draw_end && i < current.width)
 	{
 		while (data->map.draw_end >= data->mlx.win_height)
 		{
 			data->map.draw_end--;
 			true_i += factor;
 		}
-		mem_pix = data->textures->north.addr + ((i) * data->textures->north.line_l + data->map.tex_x  * (data->textures->north.bpp / 8));
+		mem_pix = current.addr + ((i) * current.line_l + data->map.tex_x  * (current.bpp / 8));
 		tex_color = *(unsigned int*)mem_pix;
 		mem_pix = data->mlx.addr + (data->map.draw_start * data->mlx.line_l + data->map.pixel * (data->mlx.bpp / 8));
 		*(unsigned int *)mem_pix = tex_color;
@@ -158,25 +158,40 @@ void	line_pixel_put(t_data *data, int start, int end, int color)
 	}
 }
 
+t_image	choose_image(t_data *data, int side)
+{
+	if (data->map.rayDir.y <= 0 && side)
+		return (data->textures->north);
+	if (data->map.rayDir.y > 0 && side)
+		return (data->textures->south);
+	if (data->map.rayDir.x > 0 && !side)
+		return (data->textures->east);
+	if (data->map.rayDir.x <= 0 && !side)
+		return (data->textures->west);
+	return(data->textures->north);
+}
+
 void	color_choice(t_data *data)
 {
 	double factor;
 	int side;
+	t_image	current;
 
 	ft_init_data(data, data->map.pixel);
 	ft_set_step(data);
 	side = ft_find_wall(data);
+	current = choose_image(data, side);
 	if (!side)
 		data->map.wall_hit = data->map.pos.y + data->map.perpWallDist * data->map.rayDir.y;
 	else
 		data->map.wall_hit = data->map.pos.x + data->map.perpWallDist * data->map.rayDir.x;
 	data->map.wall_hit -= floor(data->map.wall_hit);
-	data->map.tex_x = (int)((data->map.wall_hit * (double)(data->textures->north.width)));
+	data->map.tex_x = (int)((data->map.wall_hit * (double)current.width));
 	if (!side && data->map.rayDir.x < 0)
-		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
+		data->map.tex_x = current.width - data->map.tex_x - 1;
 	else if (side && data->map.rayDir.y > 0)
-		data->map.tex_x = data->textures->north.width - data->map.tex_x - 1;
-	factor = 1.0 * data->textures->north.height / (int)((double)(data->mlx.win_height / data->map.perpWallDist));
+		data->map.tex_x = current.width - data->map.tex_x - 1;
+	factor = 1.0 * current.height / (int)((double)(data->mlx.win_height / data->map.perpWallDist));
 	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
 	if (data->map.draw_end == data->mlx.win_height - 1)
 		line_pixel_put(data, data->map.draw_end + 1,
@@ -184,7 +199,7 @@ void	color_choice(t_data *data)
 	else
 		line_pixel_put(data, data->map.draw_end,
 			data->mlx.win_height - 1,data->textures->floor->total);
-	wall_pixel_put(data, factor);
+	wall_pixel_put(data, factor, current);
 }
 
 int	ft_raycasting(t_data *data)
