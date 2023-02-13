@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:34:31 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 15:09:47 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/13 10:50:28 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*search_map(char *line)
 		return (NULL);
 	while (line[i] && ft_isspace(line[i]))
 		i++;
+	if (line[i] == '0')
+		return (line);
 	if (line[i] == '1')
 		return (line);
-	if (line[i] == '0')
-		return (NULL);
 	return (NULL);
 }
 

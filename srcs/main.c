@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 10:43:16 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 10:45:16 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[])
 	get_player_position(data->map.map, data);
 	get_initial_dir(data);
 	data->mlx.win = mlx_new_window(data->mlx.mlx, data->mlx.win_width,
-			data->mlx.win_height, "cub3d");
+			data->mlx.win_height, "cub3D");
 	hooking(data);
 	mlx_loop(data->mlx.mlx);
 	free_data(data);
