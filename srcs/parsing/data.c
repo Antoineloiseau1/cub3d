@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 08:55:30 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/09 10:51:01 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 10:43:10 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	atoi_base(char *str)
 
 	i = -1;
 	result = 0;
-	puts(str);
 	while (str[++i])
 	{
 		if (ft_isdigit(str[i]))

@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:53:13 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 09:29:49 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 10:43:16 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void	open_images(t_data *data, t_image *dir)
 {
 	void	*img;
 
-	img = mlx_xpm_file_to_image(data->mlx.mlx, dir->path, &dir->width, &dir->height );
+	img = mlx_xpm_file_to_image(data->mlx.mlx, dir->path,
+			&dir->width, &dir->height);
 	if (!img)
 		error(1, "can't open texture");
-	dir->addr = mlx_get_data_addr(img, &dir->bpp, &dir->line_l, &dir->endian);	
+	dir->addr = mlx_get_data_addr(img, &dir->bpp, &dir->line_l, &dir->endian);
 }
 
 void	mlx_values_init(t_data *data)
@@ -54,7 +55,6 @@ int	main(int argc, char *argv[])
 	data = init_data(argv[1]);
 	data->mlx.mlx = mlx_init();
 	mlx_values_init(data);
-	puts(dec_to_hexa(data->textures->ceil->red));
 	get_player_position(data->map.map, data);
 	get_initial_dir(data);
 	data->mlx.win = mlx_new_window(data->mlx.mlx, data->mlx.win_width,

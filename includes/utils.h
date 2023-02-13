@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmidon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 07:15:42 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/09 08:13:09 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 09:59:23 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-char    *dec_to_hexa(int n);
+char	*dec_to_hexa(int n);
 
 #endif

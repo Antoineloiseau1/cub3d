@@ -6,14 +6,26 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/10 13:18:24 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 10:11:52 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdbool.h>
+# include <stdbool.h>
+
+# define ROTATE_SPEED 0.04
+# define FRONT_SPEED 0.05
+# define BACK_SPEED 0.05
+# define TRANS_SPEED 0.05
+# define ESCAPE 53
+# define UP 13
+# define DOWN 1
+# define LEFT 0
+# define RIGHT 2
+# define L_ARROW 123
+# define R_ARROW 124
 
 typedef struct s_color
 {
@@ -25,21 +37,21 @@ typedef struct s_color
 
 typedef struct s_image
 {
-	char *path;
-	char *addr;
-	int	bpp;
-	int	line_l;
-	int	endian;
-	int	width;
-	int	height;
+	char	*path;
+	char	*addr;
+	int		bpp;
+	int		line_l;
+	int		endian;
+	int		width;
+	int		height;
 }			t_image;
 
 typedef struct s_textures
 {
-	t_image north;
-	t_image south;
-	t_image east;
-	t_image west;
+	t_image	north;
+	t_image	south;
+	t_image	east;
+	t_image	west;
 	t_color	*floor;
 	t_color	*ceil;
 }t_textures;
@@ -64,7 +76,7 @@ typedef struct s_mlx
 	void		*win;
 }				t_mlx;
 
-typedef	struct	s_coord
+typedef struct s_coord
 {
 	double	x;
 	double	y;
@@ -76,19 +88,19 @@ typedef struct s_map
 	t_coord	pos;
 	t_coord	dir;
 	t_coord	plane;
-	t_coord	rayDir;
-	t_coord	sideDist;
-	t_coord	deltaDist;
-	double	perpWallDist;
-	int	pixel;
-	int	step_x;
-	int	step_y;
-	int	tile_x;
-	int	tile_y;
+	t_coord	ray_dir;
+	t_coord	side_dist;
+	t_coord	delta_dist;
+	double	perp_wall_dist;
+	int		pixel;
+	int		step_x;
+	int		step_y;
+	int		tile_x;
+	int		tile_y;
 	double	wall_hit;
 	int		tex_x;
-	int	draw_start;
-	int	draw_end;
+	int		draw_start;
+	int		draw_end;
 }			t_map;
 
 typedef struct s_data

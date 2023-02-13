@@ -1,4 +1,4 @@
-NAME	=	cub3d
+NAME	=	cub3D
 
 SRCS	=	./srcs/main.c \
 			./srcs/parsing/check_map.c \
@@ -13,7 +13,11 @@ SRCS	=	./srcs/main.c \
 			./srcs/parsing/check_file.c \
 			./srcs/parsing/parse_map.c \
 			./srcs/hook.c \
-			./srcs/raycasting.c
+			./srcs/raycasting.c \
+			./srcs/movements.c \
+			./srcs/rotate.c \
+			./srcs/raycasting_utils.c \
+			./srcs/wall.c
 
 OBJS	= 	${SRCS:.c=.o}
 
