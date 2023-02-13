@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:57:19 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/08 12:53:43 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 13:04:49 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ int	map_check_zeros_in_line(char *map[], int line)
 	{
 		if (map[line][i] == '0')
 		{
-			if (i && (!map[line][i - 1] || ft_isspace(map[line][i - 1])))
+			if (ft_isspace(map[line][i - 1]))
 				return (1);
 			if (map[line][i] && (!map[line][i + 1]
 						|| ft_isspace(map[line][i + 1])))
 				return (1);
-			if (line && (!map[line - 1][i] || ft_isspace(map[line - 1][i])))
+			if (!(i < ft_strlen(map[line - 1])) || (!map[line - 1][i]
+				|| ft_isspace(map[line - 1][i])))
 				return (1);
 			if (!(i < ft_strlen(map[line + 1])) || (!map[line + 1][i]
 				|| ft_isspace(map[line + 1][i])))

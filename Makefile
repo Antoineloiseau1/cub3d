@@ -29,7 +29,7 @@ MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
 
 CC		=	gcc -g
 
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
 
 RM		= 	rm -rf
 

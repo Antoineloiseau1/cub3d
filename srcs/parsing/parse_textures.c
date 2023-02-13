@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 09:48:12 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 11:42:19 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ t_color	*get_rgb_values(char *raw_values)
 	colors = malloc(sizeof(t_color));
 	if (!colors)
 		return (NULL);
-	colors->red = (int)ft_atoi(values[0]);
-	colors->green = (int)ft_atoi(values[1]);
-	colors->blue = (int)ft_atoi(values[2]);
+	colors->red = ft_atoi(values[0]);
+	colors->green = ft_atoi(values[1]);
+	colors->blue = ft_atoi(values[2]);
 	free_chartab(values);
+	if (colors->red < 0 || colors->red > 255)
+		return (NULL);
+	if (colors->green < 0 || colors->green > 255)
+		return (NULL);
+	if (colors->blue < 0 || colors->blue > 255)
+		return (NULL);
 	return (colors);
 }
 
@@ -109,13 +115,13 @@ t_textures	*parse_textures(char *file[])
 		if (!file[i][0])
 			i++;
 		if (textures->north.path == NULL)
-			textures->north.path = search_texture_id(file[i], "NO");
+			textures->north.path = search_texture_id(file[i], "NO ");
 		if (textures->south.path == NULL)
-			textures->south.path = search_texture_id(file[i], "SO");
+			textures->south.path = search_texture_id(file[i], "SO ");
 		if (textures->east.path == NULL)
-			textures->east.path = search_texture_id(file[i], "EA");
+			textures->east.path = search_texture_id(file[i], "EA ");
 		if (textures->west.path == NULL)
-			textures->west.path = search_texture_id(file[i], "WE");
+			textures->west.path = search_texture_id(file[i], "WE ");
 		i++;
 	}
 	parse_colors(file, textures);
