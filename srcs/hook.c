@@ -6,12 +6,13 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/13 10:16:37 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:37:14 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
+#include "../minilibx/mlx.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
@@ -61,17 +62,15 @@ int	unpress(int key, t_data *data)
 //pointer handle maybe
 int	mouse_handler(int x, int y, t_data *data)
 {
-	(void)y;
-	if (x == 1)
-		return (data->mlx.old_x);
-	if (x > data->mlx.old_x)
-		rotate_right(data);
+	mlx_mouse_get_pos(data->mlx.win, &data->mlx.old_x, &y);
 	if (x < data->mlx.old_x)
+		rotate_right(data);
+	if (x > data->mlx.old_x)
 		rotate_left(data);
 	if (x >= 1279)
-		data->mlx.old_x = 1270;
+		mlx_mouse_move(data->mlx.win, 900, 540);
 	else if (x <= 0)
-		data->mlx.old_x = 400;
+		mlx_mouse_move(data->mlx.win, 900, 540);
 	else
 		data->mlx.old_x = x;
 	return (x);

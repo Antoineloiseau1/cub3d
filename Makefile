@@ -25,7 +25,7 @@ LIB		=	libft/libft.a
 
 LFT		= 	-L./libft -lft
 
-MLX		= 	-L /usr/local/lib/ -lmlx -framework Opengl -framework Appkit
+MLX		= 	-L ./minilibx -lmlx -framework Opengl -framework Appkit
 
 CC		=	gcc -g
 

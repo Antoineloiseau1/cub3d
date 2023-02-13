@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:59:21 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 11:43:12 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:35:59 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdbool.h>
 
 # define ROTATE_SPEED 0.04
-# define FRONT_SPEED 0.05
+# define FRONT_SPEED 0.06
 # define BACK_SPEED 0.05
 # define TRANS_SPEED 0.05
 # define ESCAPE 53

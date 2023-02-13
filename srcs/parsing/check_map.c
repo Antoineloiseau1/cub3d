@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 07:57:19 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 13:04:49 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:24:01 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	map_check_ones_in_line(char *line)
 	if (line[i] && line[i] != '1')
 		return (1);
 	i = ft_strlen(line) - 1;
-	while (i != 0 && (line[i] == ' ' || line[i] == '\n'))
+	while (i >= 0 && line[i] && (line[i] == ' ' || line[i] == '\n'))
 		i--;
-	if (line[i] && line[i] != '1')
+	if (i >= 0 && line[i] && line[i] != '1')
 		return (1);
 	return (0);
 }
