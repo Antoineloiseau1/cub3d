@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:41:09 by antoine           #+#    #+#             */
-/*   Updated: 2023/01/31 15:23:39 by antoine          ###   ########.fr       */
+/*   Updated: 2023/02/13 09:48:50 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,25 @@
 int	map_check_start_position(char *map[])
 {
 	int	i;
+	int	j;
 	int	count;
 
 	i = 0;
 	count = 0;
 	while (map[i])
 	{
-		if (ft_strchrset(map[i], "NSEW") != -1)
-			count++;
+		j = 0;
+		while (map[i][j])
+		{
+			
+			if (map[i][j] == 'N' || map[i][j] == 'S'
+			|| map[i][j] == 'E' || map[i][j] == 'W')
+				count++;
+			j++;
+		}
 		i++;
 	}
-	if (count > 1 || count < 1)
+	if (count != 1)
 		return (1);
 	return (0);
 }

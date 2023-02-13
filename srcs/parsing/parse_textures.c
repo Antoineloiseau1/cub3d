@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/10 07:20:55 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 09:48:12 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_color	*get_rgb_values(char *raw_values)
 	colors->green = (int)ft_atoi(values[1]);
 	colors->blue = (int)ft_atoi(values[2]);
 	free_chartab(values);
-	printf("%d	%d	%d\n", colors->red, colors->green, colors->blue); 
 	return (colors);
 }
 

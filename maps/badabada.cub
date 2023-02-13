@@ -2,8 +2,11 @@ NO ./textures/grenouille.xpm
  SO ./textures/mariowall.xpm	
     WE ./textures/carrelage.xpm			
  EA ./textures/sang.xpm	   
+
 F	204,255,255   
 C   255,204,153				
+
+
 
          11111111111111111111111
         1000000000110000000000001

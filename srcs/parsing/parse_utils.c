@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:30:36 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/09 10:33:20 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/13 09:36:48 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*dec_to_hexa(int n)
     }
 	hexaDeciNum[++i] = '\0';
 	rev(hexaDeciNum);
-	printf("hex %s\n", hexaDeciNum); 
 	return (hexaDeciNum);
 }
 
