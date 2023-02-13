@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:35:35 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/10 13:49:38 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/13 07:35:32 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ void	ft_find_wall_height(t_data *data, int side)
 	if (data->map.draw_start < 0)
 		data->map.draw_start = 0;
 	data->map.draw_end = (lineheight / 2) + (data->mlx.win_height / 2);
-	if (data->map.draw_end >= data->mlx.win_height)
-		data->map.draw_end = data->mlx.win_height - 1;
 }
 
 //a combien de '"cases"' est le mur
@@ -131,9 +129,14 @@ void	wall_pixel_put(t_data *data, float factor)
 
 	i = 0;
 	true_i = 0;
-	//printf("wall hit %f\n", data->map.wall_hit);
+	printf("line %d	%d\n", data->map.draw_start,  data->map.draw_end);
 	while (data->map.draw_start != data->map.draw_end && i < data->textures->north.width)
 	{
+		while (data->map.draw_end >= data->mlx.win_height)
+		{
+			data->map.draw_end--;
+			true_i += factor;
+		}
 		mem_pix = data->textures->north.addr + ((i) * data->textures->north.line_l + data->map.tex_x  * (data->textures->north.bpp / 8));
 		tex_color = *(unsigned int*)mem_pix;
 		mem_pix = data->mlx.addr + (data->map.draw_start * data->mlx.line_l + data->map.pixel * (data->mlx.bpp / 8));
@@ -148,7 +151,7 @@ void	line_pixel_put(t_data *data, int start, int end, int color)
 {
 	char	*mem_pix;
 
-	while (start != end)
+	while (start != end && start < data->mlx.win_height)
 	{
 		mem_pix = data->mlx.addr + (start * data->mlx.line_l + data->map.pixel * (data->mlx.bpp / 8));
 		*(unsigned int *)mem_pix = color;
@@ -160,7 +163,7 @@ void	color_choice(t_data *data)
 {
 	double factor;
 	int side;
-	
+
 	ft_init_data(data, data->map.pixel);
 	ft_set_step(data);
 	side = ft_find_wall(data);
@@ -178,10 +181,10 @@ void	color_choice(t_data *data)
 	line_pixel_put(data, 0, data->map.draw_start, data->textures->ceil->total);
 	if (data->map.draw_end == data->mlx.win_height - 1)
 		line_pixel_put(data, data->map.draw_end + 1,
-			data->mlx.win_height, 0x00ccffff);
+			data->mlx.win_height - 1, data->textures->floor->total);
 	else
 		line_pixel_put(data, data->map.draw_end,
-			data->mlx.win_height,data->textures->floor->total);
+			data->mlx.win_height - 1,data->textures->floor->total);
 	wall_pixel_put(data, factor);
 }
 
@@ -197,7 +200,6 @@ int	ft_raycasting(t_data *data)
 	data->map.pixel = -1;
 	while (++data->map.pixel < data->mlx.win_width)
 		color_choice(data);
-//	error(1, "aled"); //stop it
 	mlx_clear_window(data->mlx.mlx, data->mlx.win);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);
