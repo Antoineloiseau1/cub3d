@@ -29,7 +29,7 @@ MLX		= 	-L ./minilibx -lmlx -framework Opengl -framework Appkit
 
 CC		=	gcc -g
 
-CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra
 
 RM		= 	rm -rf
 

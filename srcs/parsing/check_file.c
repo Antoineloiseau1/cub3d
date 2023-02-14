@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:37:38 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/10 07:21:29 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/14 14:11:26 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	check_args(int argc, char *argv[])
 
 	if (argc != 2)
 		error(1, "usage: ./cub3d [file].cub");
+	if (!ft_strlen(argv[1]))
+		error(1, ": No such file or directory");
 	file = ft_split(argv[1], '/');
 	file_name = file[tab_len(file) - 1];
 	file_extension = (ft_strchr(file_name, '.'));

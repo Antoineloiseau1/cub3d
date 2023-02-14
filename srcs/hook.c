@@ -6,13 +6,12 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 09:23:05 by mmidon            #+#    #+#             */
-/*   Updated: 2023/02/13 14:37:14 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:03:00 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx/mlx.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "../includes/raycasting.h" 
 #include "../includes/cub3d.h"
@@ -62,17 +61,17 @@ int	unpress(int key, t_data *data)
 //pointer handle maybe
 int	mouse_handler(int x, int y, t_data *data)
 {
-	mlx_mouse_get_pos(data->mlx.win, &data->mlx.old_x, &y);
-	if (x < data->mlx.old_x)
-		rotate_right(data);
+	(void)y;
+	if (x >= data->mlx.win_width)
+		mlx_mouse_move(data->mlx.win, 0, data->mlx.win_height / 2);
+	if (x <= 0)
+		mlx_mouse_move(data->mlx.win, data->mlx.win_width,
+			data->mlx.win_height / 2);
 	if (x > data->mlx.old_x)
-		rotate_left(data);
-	if (x >= 1279)
-		mlx_mouse_move(data->mlx.win, 900, 540);
-	else if (x <= 0)
-		mlx_mouse_move(data->mlx.win, 900, 540);
-	else
-		data->mlx.old_x = x;
+		mouse_rotate_right(data);
+	if (x < data->mlx.old_x)
+		mouse_rotate_left(data);
+	data->mlx.old_x = x;
 	return (x);
 }
 
@@ -80,7 +79,7 @@ void	hooking(t_data *data)
 {
 	mlx_hook(data->mlx.win, 17, 0, ft_close, 0);
 	mlx_hook(data->mlx.win, 2, 0, press, data);
+	mlx_hook(data->mlx.win, 6, 0, mouse_handler, data);
 	mlx_loop_hook(data->mlx.mlx, ft_init_raycasting, data);
 	mlx_hook(data->mlx.win, 3, 0, unpress, data);
-	mlx_hook(data->mlx.win, 6, (1L << 15), mouse_handler, data);
 }
