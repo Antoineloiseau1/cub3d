@@ -6,10 +6,10 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:34:31 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/14 08:42:04 by mmidon           ###   ########.fr       */
+/*   Updated: 2023/02/14 09:29:59 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h> 
+
 #include "../../libft/libft.h"
 #include "../../includes/cub3d.h" 
 
@@ -18,7 +18,7 @@ char	*search_map(char *line)
 	int	i;
 
 	i = 0;
-	if (!line)
+	if (!line || !ft_strlen(line))
 		return (NULL);
 	while (line[i] && ft_isspace(line[i]))
 		i++;

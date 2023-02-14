@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 13:23:56 by anloisea          #+#    #+#             */
-/*   Updated: 2023/02/13 11:42:19 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/14 09:17:02 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@
 
 char	*search_texture_id(char *line, const char *id)
 {
-	int	i;
-	int	j;
+	int		i;
+	char	**tmp;
+	char	*path;
 
 	i = 0;
+	tmp = NULL;
+	path = NULL;
 	if (!line)
 		return (NULL);
 	while (line[i] && ft_isspace(line[i]))
 		i++;
 	if (!ft_strncmp(line + i, id, ft_strlen(id)))
 	{
-		i += 2;
-		while (line[i] && ft_isspace(line[i]))
-			i++;
-		j = i;
-		while (line[j] && !ft_isspace(line[j]))
-			j++;
-		return (ft_substr(line, i, j - i));
+		tmp = ft_split(line, ' ');
+		if (tab_len(tmp) != 2)
+			return (NULL);
+		path = ft_strdup(tmp[1]);
+		free_chartab(tmp);
 	}
-	return (NULL);
+	return (path);
 }
 
 t_color	*get_rgb_values(char *raw_values)
