@@ -44,6 +44,8 @@ ${LIB}:
 ${NAME}:	${LIB} ${OBJS}
 			${CC} ${CFLAGS} ${OBJS} ${MLX} ${LFT} -o ${NAME}
 
+bonus:		all
+
 clean:
 			@make clean -sC ./libft
 			${RM} ${OBJS}
@@ -54,4 +56,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all re clean fclean
+.PHONY:		all re clean fclean bonus

@@ -6,7 +6,7 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:38:03 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/14 09:31:05 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/14 09:39:36 by anloisea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../libft/libft.h"
 #include <stdlib.h>
 
-void	check_check(int *check)
+void	check_check(int *check, t_data *data)
 {
 	int	i;
 
@@ -24,6 +24,8 @@ void	check_check(int *check)
 		if (check[i] != 1)
 		{
 			free(check);
+			free(data->file);
+			free(data);
 			error(2, "duplicate or undefined textures");
 		}
 		i++;
@@ -65,7 +67,7 @@ void	check_file(t_data *data)
 	check = ft_calloc(6, sizeof(int));
 	while (data->file[++i])
 		count_textures(data->file[i], check);
-	check_check(check);
+	check_check(check, data);
 	free(check);
 }
 
