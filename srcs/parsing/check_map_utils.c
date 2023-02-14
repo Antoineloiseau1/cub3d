@@ -6,10 +6,11 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:41:09 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/13 10:19:47 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/14 08:07:13 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> 
 #include "../../includes/cub3d.h"
 #include "../../libft/libft.h"
 
@@ -58,6 +59,19 @@ int	map_check_char(char *map[])
 	return (0);
 }
 
+int	ft_str_isspace(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != ' ' && str[i] != '\n')
+			return (0);
+	}
+	return (1);
+}
+
 int	check_for_additionnal_content(char *map[])
 {
 	int	i;
@@ -65,11 +79,11 @@ int	check_for_additionnal_content(char *map[])
 	i = 0;
 	while (map[i])
 	{
-		if (!map[i][0])
+		if (!map[i][0] && !ft_str_isspace(map[i]))
 			break ;
 		i++;
 	}
-	while (map[i] && !map[i][0])
+	while (map[i] && (!map[i][0] || ft_str_isspace(map[i])))
 		i++;
 	if (!map[i])
 		return (0);

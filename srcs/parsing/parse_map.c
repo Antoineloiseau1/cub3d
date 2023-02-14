@@ -6,11 +6,12 @@
 /*   By: anloisea <anloisea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:34:31 by antoine           #+#    #+#             */
-/*   Updated: 2023/02/13 10:50:28 by anloisea         ###   ########.fr       */
+/*   Updated: 2023/02/14 08:42:04 by mmidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h> 
 #include "../../libft/libft.h"
+#include "../../includes/cub3d.h" 
 
 char	*search_map(char *line)
 {
@@ -21,9 +22,14 @@ char	*search_map(char *line)
 		return (NULL);
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	if (line[i] == '0')
+	if (ft_strchr(line, '\t'))
+		error(1, "tabs != space (and we don't accept tabs)");
+	if (ft_strncmp(line + i, "NO ", 3)
+		&& ft_strncmp(line + i, "EA ", 3) && ft_strncmp(line + i, "WE ", 3)
+		&& ft_strncmp(line + i, "SO ", 3) && ft_strncmp(line + i, "F ", 2)
+		&& ft_strncmp(line + i, "C ", 2) && line[i] != '\n')
 		return (line);
-	if (line[i] == '1')
+	if (line[i] == '1' || line[i] == '0')
 		return (line);
 	return (NULL);
 }

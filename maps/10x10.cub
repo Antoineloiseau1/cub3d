@@ -1,11 +1,14 @@
-NO ./textures/laine4k.xpm	
- SO ./textures/gold.xpm	
-    WE ./textures/moutain.xpm		
- EA ./textures/grenouille.xpm	   
+NO ./textures/laine4k.xpm
+ SO ./textures/gold.xpm
+    WE ./textures/moutain.xpm
+ EA ./textures/grenouille.xpm
 
-F	204,255,255   
-C   255,204,153	
+F 204,255,255
+C   255,204,153
 
+        
+    
+           
 
 11111111111                                       11111111111
 10101000001                                       10100000101
@@ -76,3 +79,11 @@ C   255,204,153
                      111110111110101110111
                      100000000000101000001
                      111111111111111111111
+
+
+
+
+
+             
+                
+
